@@ -2,6 +2,8 @@
 
 import streamlit as st
 
+from llm import get_llm_provider
+
 PREFIX = """
 Du bist ein Psychotherapeut, der dieses Person berät:\n
 """
@@ -17,12 +19,59 @@ def main() -> None:  # noqa: D103
         return
 
     instruction = PREFIX + self_disclosure
-    st.code(instruction)
 
-    with st.chat_message("user"):
-        st.write("user")
-    with st.chat_message("assistant"):
-        st.write("assistant")
+    # Initialize chat history
+    if "chat_messages" not in st.session_state:
+        st.session_state.chat_messages = []
+
+    # Display chat messages from history
+    for message in st.session_state.chat_messages:
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
+
+    # Chat input
+    if user_input := st.chat_input("Stelle eine Frage..."):
+        # Add user message to chat history
+        st.session_state.chat_messages.append({"role": "user", "content": user_input})
+
+        # Display user message
+        with st.chat_message("user"):
+            st.write(user_input)
+
+        # Generate assistant response
+        with st.chat_message("assistant"), st.spinner("Denke nach..."):
+            # Build conversation history for context
+            conversation = ""
+            for msg in st.session_state.chat_messages[
+                :-1
+            ]:  # Exclude the just-added user message
+                if msg["role"] == "user":
+                    conversation += f"Du: {msg['content']}\n"
+                else:
+                    conversation += f"KI: {msg['content']}\n"
+
+            # Add current user message
+            full_prompt = conversation + f"Du: {user_input}\n"
+
+            # Get LLM response
+            llm = get_llm_provider()
+            response = llm.generate(instruction, prompt=full_prompt)
+
+            st.write(response)
+
+            # Add assistant response to chat history
+            st.session_state.chat_messages.append(
+                {"role": "assistant", "content": response}
+            )
+
+    # Add a button to clear chat history
+    if st.button("Chat-Verlauf löschen"):
+        st.session_state.chat_messages = []
+        st.rerun()
+
+    # # Optional: Show the instruction in an expander (collapsed by default)
+    # with st.expander("System-Anweisung anzeigen"):
+    #     st.code(instruction)
 
 
 if __name__ == "__main__":

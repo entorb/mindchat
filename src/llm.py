@@ -2,6 +2,8 @@
 
 from abc import ABC, abstractmethod
 
+DEFAULT_LLM_PROVIDER = "Ollama"
+
 
 class LLMProvider(ABC):
     """Abstract base class for LLM providers."""
@@ -22,7 +24,7 @@ class LLMProvider(ABC):
 
 
 # Factory function to get LLM provider
-def get_llm_provider(provider: str = "Ollama", **kwargs) -> LLMProvider:  # noqa: ANN003
+def get_llm_provider(provider: str = "OpenAI", **kwargs) -> LLMProvider:  # noqa: ANN003
     """
     Get an LLM provider instance.
 
@@ -38,5 +40,9 @@ def get_llm_provider(provider: str = "Ollama", **kwargs) -> LLMProvider:  # noqa
         from llm_ollama import OllamaProvider  # noqa: PLC0415
 
         return OllamaProvider(**kwargs)
+    if provider == "OpenAI":
+        from llm_openai import OpenAIProvider  # noqa: PLC0415
+
+        return OpenAIProvider(**kwargs)
     msg = f"Unknown LLM provider: {provider}"
     raise ValueError(msg)

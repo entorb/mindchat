@@ -10,6 +10,8 @@ from llm import get_llm_provider
 def main() -> None:  # noqa: D103
     st.title("Selbstauskunft")
 
+    st.markdown("""Fülle diese Selbstauskunft aus.""")
+
     if "my-self-disclosure" in st.session_state:
         self_disclosure = st.session_state["my-self-disclosure"]
     else:

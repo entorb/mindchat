@@ -7,6 +7,7 @@ def main() -> None:  # noqa: D103
     st.title("Logout")
     for key in st.session_state:
         del st.session_state[key]
+
     st.write("Deine Daten wurden aus dem Arbeitsspeicher des Servers gelöscht.")
 
 
