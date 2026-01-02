@@ -4,6 +4,7 @@ from pathlib import Path
 
 import streamlit as st
 from streamlit.logger import get_logger
+from streamlit.navigation.page import StreamlitPage
 
 from helper import (
     init_matomo,
@@ -27,7 +28,14 @@ logger = get_logger(__file__)
 
 
 def main() -> None:  # noqa: D103
-    st.title("Mind Chat")
+    # create_navigation_menu
+    lst: list[StreamlitPage] = []
+    lst.append(st.Page(page="reports/r00_disclaimer.py", title="Disclaimer"))
+    lst.append(st.Page(page="reports/r01_self.py", title="Selbstauskunft"))
+    lst.append(st.Page(page="reports/r02_chat.py", title="Chat"))
+    lst.append(st.Page(page="reports/r99_logout.py", title="Logout"))  # TODO
+    pg = st.navigation(lst)
+    pg.run()
 
 
 if __name__ == "__main__":

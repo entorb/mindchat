@@ -26,6 +26,8 @@ Menke
 noqa
 notna
 numpy
+ollama
+Ollama
 Pandas
 Personen
 Prozent
