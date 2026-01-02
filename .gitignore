@@ -3,12 +3,7 @@ __pycache__/
 .DS_Store
 .pytest_cache/
 .venv/
-.vscode/
 coverage_report/
 
 .streamlit/secrets.toml
-data/*.xlsx
-playground.py
-requirements-all.txt
-requirements-dev.txt
 requirements.txt
