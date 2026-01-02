@@ -1,0 +1,26 @@
+[global]
+
+[logger]
+messageFormat = "%(asctime)s	%(levelname)s	%(name)s	%(message)s"
+level = "info"
+
+[client]
+showErrorDetails = "full"
+
+[runner]
+
+[server]
+baseUrlPath = "/mindchat"
+fileWatcherType = "none"
+maxUploadSize = 1
+port = 8504
+
+[browser]
+gatherUsageStats = false
+
+[mapbox]
+
+[theme]
+base = "dark"
+
+[secrets]

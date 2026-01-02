@@ -1,0 +1,23 @@
+[project]
+name = "mindchat"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy==2.2.3",
+    "pandas==2.2.3",
+    "pyarrow==20.0.0",
+    "sentry-sdk>=2.48.0",
+    "streamlit>=1.52.2",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.10",
+    "tomli-w>=1.2.0",
+    "watchdog>=6.0.0",
+]
