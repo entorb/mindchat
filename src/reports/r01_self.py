@@ -25,7 +25,7 @@ def main() -> None:  # noqa: D103
     text_content = st.text_area(
         label="",
         value=self_disclosure,
-        height=400,  # fallback height
+        height=800,  # fallback height
         placeholder="Enter your text here...",
     )
     # 2nd save button to prevent data loss
@@ -43,9 +43,13 @@ def main() -> None:  # noqa: D103
             processed_lines.append(stripped)
         text_content = "\n".join(processed_lines)
 
-        st.session_state["my-self-disclosure"] = text_content
+        if text_content != "":
+            st.session_state["my-self-disclosure"] = text_content
 
-    if st.session_state["my-self-disclosure"] != "":
+    if (
+        "my-self-disclosure" in st.session_state
+        and st.session_state["my-self-disclosure"] != ""
+    ):
         st.header("Feedback")
         btn_feedback = st.button("KI Feedback einholen")
 

@@ -19,6 +19,7 @@ Dies ist eine KI-basierte Chat-Anwendung, die Anreize und Tipps geben könnte. S
 
 - Deine Daten werden nur im Speicher verarbeitet und nicht auf dem Server oder in einer Datenbank gespeichert. Alle Daten werden beim Logout und Sitzungsende gelöscht.
 - **Achtung:** Deine Daten werden von der OpenAI KI über deren API verarbeitet.
+- Vorteil gegenüber persönlichem ChatGPT Account: OpenAI kann Deine Daten nicht Deinem Account, sondern nur dieser App zuordnen.
 - Die Kommunikation ist über HTTPS verschlüsselt.
 - Der Quellcode dieser App ist öffentlich auf [GitHub](https://github.com/entorb/mindchat) verfügbar.
 
