@@ -1,6 +1,7 @@
 """LLM module for handling language model interactions."""
 
 from abc import ABC, abstractmethod
+from functools import lru_cache
 
 DEFAULT_LLM_PROVIDER = "Ollama"
 
@@ -22,9 +23,24 @@ class LLMProvider(ABC):
 
         """
 
+    @abstractmethod
+    def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
+        """
+        Generate a response from the LLM using conversation history.
+
+        Args:
+            system_message: The system instruction for the LLM
+            messages: List of message dicts with 'role' and 'content' keys
+
+        Returns:
+            The generated response
+
+        """
+
 
 # Factory function to get LLM provider
-def get_llm_provider(provider: str = "OpenAI", **kwargs) -> LLMProvider:  # noqa: ANN003
+@lru_cache(maxsize=1)
+def get_llm_provider(provider: str = DEFAULT_LLM_PROVIDER, **kwargs) -> LLMProvider:  # noqa: ANN003
     """
     Get an LLM provider instance.
 

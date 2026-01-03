@@ -34,3 +34,27 @@ class OllamaProvider(LLMProvider):
             return response["message"]["content"]
         except Exception as e:
             return f"Error calling Ollama: {e!s}"
+
+    def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
+        """
+        Generate a response using Ollama with conversation history.
+
+        Args:
+            system_message: The system instruction for the LLM
+            messages: List of message dicts with 'role' and 'content' keys
+
+        Returns:
+            The generated response
+
+        """
+        try:
+            api_messages = [{"role": "system", "content": system_message}]
+            api_messages.extend(messages)
+
+            response = ollama.chat(
+                model=self.model,
+                messages=api_messages,
+            )
+            return response["message"]["content"]
+        except Exception as e:
+            return f"Error calling Ollama: {e!s}"

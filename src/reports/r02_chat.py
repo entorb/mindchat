@@ -1,4 +1,9 @@
-"""Chat."""
+"""
+Chat.
+
+A chat interface where the user can interact with an AI psychotherapist
+based on their self-disclosure.
+"""
 
 import streamlit as st
 
@@ -40,22 +45,9 @@ def main() -> None:  # noqa: D103
 
         # Generate assistant response
         with st.chat_message("assistant"), st.spinner("Denke nach..."):
-            # Build conversation history for context
-            conversation = ""
-            for msg in st.session_state.chat_messages[
-                :-1
-            ]:  # Exclude the just-added user message
-                if msg["role"] == "user":
-                    conversation += f"Du: {msg['content']}\n"
-                else:
-                    conversation += f"KI: {msg['content']}\n"
-
-            # Add current user message
-            full_prompt = conversation + f"Du: {user_input}\n"
-
-            # Get LLM response
+            # Get LLM response using conversation history
             llm = get_llm_provider()
-            response = llm.generate(instruction, prompt=full_prompt)
+            response = llm.chat(instruction, st.session_state.chat_messages)
 
             st.write(response)
 

@@ -36,3 +36,27 @@ class OpenAIProvider(LLMProvider):
             return response.choices[0].message.content or ""
         except Exception as e:
             return f"Error calling OpenAI: {e!s}"
+
+    def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
+        """
+        Generate a response using OpenAI with conversation history.
+
+        Args:
+            system_message: The system instruction for the LLM
+            messages: List of message dicts with 'role' and 'content' keys
+
+        Returns:
+            The generated response
+
+        """
+        try:
+            api_messages = [{"role": "system", "content": system_message}]
+            api_messages.extend(messages)
+
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=api_messages,
+            )
+            return response.choices[0].message.content or ""
+        except Exception as e:
+            return f"Error calling OpenAI: {e!s}"
