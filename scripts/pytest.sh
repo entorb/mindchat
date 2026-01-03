@@ -1,2 +1,2 @@
 #!/bin/sh
-pytest --cov --cov-report=html:coverage_report
+uv run pytest --cov --cov-report=html:coverage_report
