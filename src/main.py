@@ -63,7 +63,7 @@ def main() -> None:  # noqa: D103
     lst.append(st.Page(page="reports/r01_self.py", title="Selbstauskunft"))
     lst.append(st.Page(page="reports/r02_chat.py", title="Chat"))
     lst.append(st.Page(page="reports/r99_logout.py", title="Logout"))
-    pg = st.navigation(lst)
+    pg = st.navigation(pages=lst, position="sidebar", expanded=True)
     pg.run()
 
 
