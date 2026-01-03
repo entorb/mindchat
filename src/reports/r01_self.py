@@ -10,7 +10,11 @@ from llm import get_llm_provider
 def main() -> None:  # noqa: D103
     st.title("Selbstauskunft")
 
-    st.markdown("""Fülle diese Selbstauskunft aus.""")
+    st.markdown("""
+- Fülle diese Selbstauskunft aus, damit die KI Dich beraten kann
+- Zeilen mit '##' sind Überschriften, füge gerne weitere ein oder lösche irrelevante
+- Klick Button "Speichen" um die Daten zu übernehmen
+- Tipp: Falls Du diese App nochmal verwenden willst, kopiere und speichere den Text hinterher auf deinem Gerät, da beim Abmelden alle Deinen Daten vom Server gelöscht werden.""")  # noqa: E501
 
     if "my-self-disclosure" in st.session_state:
         self_disclosure = st.session_state["my-self-disclosure"]
@@ -18,7 +22,6 @@ def main() -> None:  # noqa: D103
         # initialize from template
         self_disclosure = Path("src/prompts/self-disclosure-template.md").read_text()
 
-    btn_save1 = st.button("Speichern", key="btn_save1", type="primary")
     text_content = st.text_area(
         label="",
         value=self_disclosure,
@@ -26,9 +29,9 @@ def main() -> None:  # noqa: D103
         placeholder="Enter your text here...",
     )
     # 2nd save button to prevent data loss
-    btn_save2 = st.button("Speichern", key="btn_save2", type="primary")
+    btn_save = st.button("Speichern", key="btn_save2", type="primary")
 
-    if text_content:
+    if btn_save and text_content:
         text_content = text_content.strip()
         # loop over all lines
         lines = text_content.split("\n")
@@ -40,9 +43,9 @@ def main() -> None:  # noqa: D103
             processed_lines.append(stripped)
         text_content = "\n".join(processed_lines)
 
-        if btn_save1 or btn_save2:
-            st.session_state["my-self-disclosure"] = text_content
+        st.session_state["my-self-disclosure"] = text_content
 
+    if st.session_state["my-self-disclosure"] != "":
         st.header("Feedback")
         btn_feedback = st.button("KI Feedback einholen")
 

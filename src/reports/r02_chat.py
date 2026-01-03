@@ -23,6 +23,11 @@ def main() -> None:  # noqa: D103
         st.write("Selbstauskunft ist leer")
         return
 
+    st.markdown("""
+- Hier kannst Du mit der KI chatten.
+- Vorschläge für Fragen: Was sind meine Stärken? Worauf sollte ich achten?
+""")
+
     instruction = PREFIX + self_disclosure
 
     # Initialize chat history

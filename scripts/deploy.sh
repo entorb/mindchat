@@ -1,20 +1,22 @@
 #!/bin/sh
 cd $(dirname $0)/..
 
+echo copying
+# requirements
+uv run scripts/gen_requirements.py
+rsync -uz requirements.txt entorb@entorb.net:streamlit-mindchat/
 
-# python scripts/gen_requirements.py
-# echo copying
-# # config.toml -> config-prod.toml
-# uv run scripts/config_convert.py
-# rsync -uz .streamlit/config-prod.toml entorb@entorb.net:streamlit-de-dorf/.streamlit/config.toml
-# rsync -uz .streamlit/secrets.toml entorb@entorb.net:streamlit-de-dorf/.streamlit/secrets.toml
-# rsync -uz requirements.txt entorb@entorb.net:streamlit-de-dorf/
-# rsync -uz Weitere_Zahlen.md entorb@entorb.net:streamlit-de-dorf/
-# rsync -ruzv --no-links --delete --delete-excluded --exclude __pycache__ src/ entorb@entorb.net:streamlit-de-dorf/src/
-# rsync -ruzv --no-links --delete --delete-excluded data/* entorb@entorb.net:streamlit-de-dorf/data/
+# .streamlit/*.toml
+# config.toml -> config-prod.toml
+uv run scripts/config_convert.py
+rsync -uz .streamlit/config-prod.toml entorb@entorb.net:streamlit-mindchat/.streamlit/config.toml
+rsync -uz .streamlit/secrets.toml entorb@entorb.net:streamlit-mindchat/.streamlit/secrets.toml
 
-# # echo installing packages
-# ssh entorb@entorb.net "pip3.11 install --user -r streamlit-de-dorf/requirements.txt > /dev/null"
+# src
+rsync -ruzv --no-links --delete --delete-excluded --exclude __pycache__ src/ entorb@entorb.net:streamlit-mindchat/src/
 
-# echo restarting streamlit-de-dorf
-# ssh entorb@entorb.net "supervisorctl restart streamlit-de-dorf"
+# echo installing packages
+ssh entorb@entorb.net "pip3.11 install --user -r streamlit-mindchat/requirements.txt > /dev/null"
+
+echo restarting streamlit-mindchat
+ssh entorb@entorb.net "supervisorctl restart streamlit-mindchat"

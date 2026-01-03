@@ -34,7 +34,8 @@ class OpenAIProvider(LLMProvider):
                 ],
             )
             return response.choices[0].message.content or ""
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
+            # TODO: logger
             return f"Error calling OpenAI: {e!s}"
 
     def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
@@ -55,8 +56,9 @@ class OpenAIProvider(LLMProvider):
 
             response = self.client.chat.completions.create(
                 model=self.model,
-                messages=api_messages,
+                messages=api_messages,  # type: ignore
             )
             return response.choices[0].message.content or ""
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
+            # TODO: logger
             return f"Error calling OpenAI: {e!s}"

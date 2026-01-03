@@ -24,7 +24,9 @@ st.set_page_config(
 
 # running on webserver?
 if Path("/var/www/virtual/entorb/html").exists():
-    init_sentry()
+    # TODO: fix
+    if 1 == 2:  # noqa: PLR0133
+        init_sentry()
     init_matomo()
 
 
@@ -57,7 +59,7 @@ def main() -> None:  # noqa: D103
 
     # create_navigation_menu
     lst: list[StreamlitPage] = []
-    lst.append(st.Page(page="reports/r00_disclaimer.py", title="Disclaimer"))
+    lst.append(st.Page(page="reports/r00_info.py", title="Info"))
     lst.append(st.Page(page="reports/r01_self.py", title="Selbstauskunft"))
     lst.append(st.Page(page="reports/r02_chat.py", title="Chat"))
     lst.append(st.Page(page="reports/r99_logout.py", title="Logout"))

@@ -11,7 +11,7 @@ from streamlit.testing.v1 import AppTest
 def init_report(path: Path) -> AppTest:
     at = AppTest.from_file(str(path))
     # setup some session variables
-    at.session_state["password"] = "xxx"
+    at.session_state["logged_in"] = True
     return at
 
 

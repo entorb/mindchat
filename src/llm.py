@@ -2,8 +2,13 @@
 
 from abc import ABC, abstractmethod
 from functools import lru_cache
+from pathlib import Path
 
-DEFAULT_LLM_PROVIDER = "Ollama"
+# TODO: helper ENV
+if Path("/var/www/virtual/entorb/html").exists():
+    DEFAULT_LLM_PROVIDER = "OpenAI"
+else:
+    DEFAULT_LLM_PROVIDER = "Ollama"
 
 
 class LLMProvider(ABC):

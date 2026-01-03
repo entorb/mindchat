@@ -20,6 +20,8 @@
 
 ## Erfolge (privat, beruflich)
 
+## Stärken
+
 ## Misserfolge (privat, beruflich)
 
 ## Selbsteinschätzung

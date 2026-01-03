@@ -38,6 +38,7 @@ pyproject
 pytest
 Quelle
 ruzv
+Selbstoffenbarungsformulars
 selectbox
 SonarCloud
 SonarQube

@@ -32,7 +32,8 @@ class OllamaProvider(LLMProvider):
                 ],
             )
             return response["message"]["content"]
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
+            # TODO: logger
             return f"Error calling Ollama: {e!s}"
 
     def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
@@ -56,5 +57,6 @@ class OllamaProvider(LLMProvider):
                 messages=api_messages,
             )
             return response["message"]["content"]
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
+            # TOOD: logger
             return f"Error calling Ollama: {e!s}"
