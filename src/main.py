@@ -8,8 +8,6 @@ from config import ENV
 from helper import (
     create_navigation,
     init_logging,
-    init_matomo,
-    init_sentry,
     show_login_page,
 )
 
@@ -25,12 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:  # noqa: D103
-    # Only if running on webserver
-    if ENV == "Prod":
-        init_sentry()
-        init_matomo()
-
-    # Check if user is logged in
+    # Login, only on prod
     if ENV == "Prod" and not st.session_state.get("logged_in", False):
         show_login_page()
         return
