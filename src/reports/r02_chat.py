@@ -5,6 +5,8 @@ A chat interface where the user can interact with an AI psychotherapist
 based on their self-disclosure.
 """
 
+from datetime import UTC, datetime
+
 import streamlit as st
 
 from llm import get_llm_provider
@@ -14,21 +16,53 @@ Du bist ein Psychotherapeut, der dieses Person berät:\n
 """
 
 
+def generate_markdown_export(system_message: str, messages: list) -> str:
+    """Generate a markdown formatted string of the chat history."""
+    markdown = "# Chat-Verlauf\n\n"
+    markdown += "## 0. **KI Anweisung**\n\n"
+    markdown += f"{system_message}\n\n"
+
+    for i, message in enumerate(messages, 1):
+        role = "Du" if message["role"] == "user" else "KI"
+        markdown += f"---\n\n## {i}. **{role}**\n\n{message['content']}\n\n"
+
+    return markdown
+
+
+def show_history_buttons(system_message: str) -> None:
+    """Show download and clear history buttons."""
+    cols = st.columns(2)
+
+    markdown_content = generate_markdown_export(
+        system_message, st.session_state.chat_messages
+    )
+
+    filename = f"mindchat_{datetime.now(UTC).strftime('%Y%m%d_%H%M')}.md"
+
+    cols[0].download_button(
+        label="Download Chatverlauf",
+        data=markdown_content,
+        file_name=filename,
+        mime="text/markdown",
+    )
+
+    if cols[1].button("Chat-Verlauf löschen"):
+        st.session_state.chat_messages = []
+        st.rerun()
+
+
 def main() -> None:  # noqa: D103
     st.title("Chat")
-
-    self_disclosure = st.session_state.get("my-self-disclosure", "")
-
-    if self_disclosure == "":
-        st.write("Selbstauskunft ist leer")
-        return
-
     st.markdown("""
 - Hier kannst Du mit der KI chatten.
 - Vorschläge für Fragen: Was sind meine Stärken? Worauf sollte ich achten?
 """)
 
-    instruction = PREFIX + self_disclosure
+    if "my-self-disclosure" not in st.session_state:
+        st.write("Selbstauskunft ist leer")
+        return
+
+    system_message = PREFIX + st.session_state["my-self-disclosure"]
 
     # Initialize chat history
     if "chat_messages" not in st.session_state:
@@ -52,7 +86,9 @@ def main() -> None:  # noqa: D103
         with st.chat_message("assistant"), st.spinner("Denke nach..."):
             # Get LLM response using conversation history
             llm = get_llm_provider()
-            response = llm.chat(instruction, st.session_state.chat_messages)
+            response = llm.chat(
+                system_message=system_message, messages=st.session_state.chat_messages
+            )
 
             st.write(response)
 
@@ -61,14 +97,9 @@ def main() -> None:  # noqa: D103
                 {"role": "assistant", "content": response}
             )
 
-    # Add a button to clear chat history
-    if st.button("Chat-Verlauf löschen"):
-        st.session_state.chat_messages = []
-        st.rerun()
-
-    # # Optional: Show the instruction in an expander (collapsed by default)
-    # with st.expander("System-Anweisung anzeigen"):
-    #     st.code(instruction)
+    # Show history buttons only if there are chat messages
+    if st.session_state.chat_messages:
+        show_history_buttons(system_message)
 
 
 if __name__ == "__main__":
