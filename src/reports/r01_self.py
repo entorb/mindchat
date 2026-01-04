@@ -7,16 +7,13 @@ import streamlit as st
 
 from config import SPINNER_MESSAGES
 from llm import get_llm_provider
+from text import r01_self_info
 
 
 def main() -> None:  # noqa: D103
     st.title("Selbstauskunft")
 
-    st.markdown("""
-- Fülle diese Selbstauskunft aus, damit Du mit der KI über Dich chatten kannst
-- Zeilen mit '##' sind Überschriften, lösche gerne irrelevante oder füge weitere ein
-- Wichtig: "Speichen" um die Daten zu übernehmen
-- Tipp: Falls Du diese App nochmal verwenden willst, kopiere und speichere den Text hinterher auf dein Gerät, da beim Abmelden alle Deine Daten vom Server gelöscht werden.""")  # noqa: E501
+    st.markdown(r01_self_info)
 
     if "my-self-disclosure" in st.session_state:
         self_disclosure = st.session_state["my-self-disclosure"]
@@ -25,7 +22,7 @@ def main() -> None:  # noqa: D103
         self_disclosure = Path("src/prompts/self-disclosure-template.md").read_text()
 
     text_content = st.text_area(
-        label="Selbstauskunft",
+        label="Verfassen der Selbstauskunft",
         value=self_disclosure,
         height=800,  # fallback height
         placeholder="Enter your text here...",
