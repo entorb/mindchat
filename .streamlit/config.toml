@@ -8,6 +8,7 @@ level = "info"
 
 [client]
 showErrorDetails = "full"
+showSidebarNavigation = true
 
 [runner]
 
