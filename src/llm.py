@@ -2,25 +2,20 @@
 
 from abc import ABC, abstractmethod
 from functools import lru_cache
-from pathlib import Path
 
-# TODO: helper ENV
-if Path("/var/www/virtual/entorb/html").exists():
-    DEFAULT_LLM_PROVIDER = "OpenAI"
-else:
-    DEFAULT_LLM_PROVIDER = "Ollama"
+from config import LLM_PROVIDER
 
 
 class LLMProvider(ABC):
     """Abstract base class for LLM providers."""
 
     @abstractmethod
-    def generate(self, instruction: str, prompt: str) -> str:
+    def generate(self, system_message: str, prompt: str) -> str:
         """
         Generate a response from the LLM.
 
         Args:
-            instruction: The system instruction for the LLM
+            system_message: The system instruction for the LLM
             prompt: The user prompt to respond to
 
         Returns:
@@ -45,7 +40,7 @@ class LLMProvider(ABC):
 
 # Factory function to get LLM provider
 @lru_cache(maxsize=1)
-def get_llm_provider(provider: str = DEFAULT_LLM_PROVIDER, **kwargs) -> LLMProvider:  # noqa: ANN003
+def get_llm_provider(provider: str = LLM_PROVIDER, **kwargs) -> LLMProvider:  # noqa: ANN003
     """
     Get an LLM provider instance.
 
