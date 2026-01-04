@@ -1,8 +1,5 @@
 """
 Chat.
-
-A chat interface where the user can interact with an AI psychotherapist
-based on their self-disclosure.
 """
 
 import random
@@ -12,10 +9,7 @@ import streamlit as st
 
 from config import SPINNER_MESSAGES
 from llm import get_llm_provider
-
-PREFIX = """
-Du bist ein Psychotherapeut, der dieses Person berät:\n
-"""
+from text import r02_chat_info, r02_prefix
 
 
 def generate_markdown_export(system_message: str, messages: list) -> str:
@@ -55,16 +49,13 @@ def show_history_buttons(system_message: str) -> None:
 
 def main() -> None:  # noqa: D103
     st.title("Chat")
-    st.markdown("""
-- Hier kannst Du mit der KI chatten.
-- Vorschläge für Fragen: Was sind meine Stärken? Worauf sollte ich achten?
-""")
+    st.markdown(r02_chat_info)
 
     if "my-self-disclosure" not in st.session_state:
         st.write("Selbstauskunft ist leer")
         return
 
-    system_message = PREFIX + st.session_state["my-self-disclosure"]
+    system_message = r02_prefix + st.session_state["my-self-disclosure"]
 
     # Initialize chat history
     if "chat_messages" not in st.session_state:
