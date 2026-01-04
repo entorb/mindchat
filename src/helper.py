@@ -1,10 +1,13 @@
 """Helper Functions."""
 
 import logging
+import subprocess
 import time
 
 import streamlit as st
 from streamlit.navigation.page import StreamlitPage
+
+from config import WEBSTATS_SCRIPT
 
 
 def init_logging() -> None:
@@ -66,6 +69,7 @@ def show_login_page() -> None:
     if st.button("Anmelden") or input_password:
         if input_password == st.secrets["login_password"]:
             st.session_state["logged_in"] = True
+            subprocess.run([WEBSTATS_SCRIPT, "mindchat"], check=False, shell=False)  # noqa: S603
             st.rerun()
         else:
             time.sleep(3)  # Mitigate brute-force attacks
