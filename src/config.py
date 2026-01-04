@@ -3,6 +3,7 @@
 from pathlib import Path
 
 PROD_PATH = Path("/var/www/virtual/entorb/html")
+WEBSTATS_SCRIPT = "/var/www/virtual/entorb/web-stats.py"
 
 ENV = "Prod" if PROD_PATH.exists() else "Local"
 
