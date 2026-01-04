@@ -5,10 +5,12 @@ A chat interface where the user can interact with an AI psychotherapist
 based on their self-disclosure.
 """
 
+import random
 from datetime import UTC, datetime
 
 import streamlit as st
 
+from config import SPINNER_MESSAGES
 from llm import get_llm_provider
 
 PREFIX = """
@@ -83,13 +85,14 @@ def main() -> None:  # noqa: D103
             st.write(user_input)
 
         # Generate assistant response
-        with st.chat_message("assistant"), st.spinner("Denke nach..."):
-            # Get LLM response using conversation history
+        with st.chat_message("assistant"), st.spinner(random.choice(SPINNER_MESSAGES)):  # noqa: S311
+            # Call LLM
             llm = get_llm_provider()
             response = llm.chat(
                 system_message=system_message, messages=st.session_state.chat_messages
             )
 
+            # Display
             st.write(response)
 
             # Add assistant response to chat history
