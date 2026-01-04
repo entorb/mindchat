@@ -2,39 +2,36 @@
 
 import ollama
 
+from config import LLM_MODEL
 from llm import LLMProvider
 
 
 class OllamaProvider(LLMProvider):
     """Ollama-based LLM provider."""
 
-    def __init__(self, model: str = "llama3.2") -> None:  # noqa: D107
+    def __init__(self, model: str = LLM_MODEL) -> None:  # noqa: D107
         self.model = model
 
-    def generate(self, instruction: str, prompt: str) -> str:
+    def generate(self, system_message: str, prompt: str) -> str:
         """
         Generate a response using Ollama.
 
         Args:
-            instruction: The system instruction for the LLM
+            system_message: The system instruction for the LLM
             prompt: The user prompt to respond to
 
         Returns:
             The generated response
 
         """
-        try:
-            response = ollama.chat(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": instruction},
-                    {"role": "user", "content": prompt},
-                ],
-            )
-            return response["message"]["content"]
-        except Exception as e:  # noqa: BLE001
-            # TODO: logger
-            return f"Error calling Ollama: {e!s}"
+        response = ollama.chat(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": prompt},
+            ],
+        )
+        return response["message"]["content"]
 
     def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
         """
@@ -48,15 +45,11 @@ class OllamaProvider(LLMProvider):
             The generated response
 
         """
-        try:
-            api_messages = [{"role": "system", "content": system_message}]
-            api_messages.extend(messages)
+        api_messages = [{"role": "system", "content": system_message}]
+        api_messages.extend(messages)
 
-            response = ollama.chat(
-                model=self.model,
-                messages=api_messages,
-            )
-            return response["message"]["content"]
-        except Exception as e:  # noqa: BLE001
-            # TOOD: logger
-            return f"Error calling Ollama: {e!s}"
+        response = ollama.chat(
+            model=self.model,
+            messages=api_messages,
+        )
+        return response["message"]["content"]
