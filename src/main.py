@@ -4,7 +4,7 @@ import logging
 
 import streamlit as st
 
-from config import ENV
+from config import ENV, LLM_MODEL, LLM_PROVIDER
 from helper import (
     create_navigation,
     init_logging,
@@ -29,6 +29,7 @@ def main() -> None:  # noqa: D103
         return
 
     _page = create_navigation()
+    st.sidebar.markdown(f"*KI: {LLM_PROVIDER}, {LLM_MODEL}*")
 
 
 if __name__ == "__main__":
