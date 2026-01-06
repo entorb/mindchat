@@ -8,6 +8,12 @@ import streamlit as st
 from streamlit.navigation.page import StreamlitPage
 
 from config import WEBSTATS_SCRIPT
+from texts import (
+    r00_title,
+    r01_title,
+    r02_title,
+    r99_title,
+)
 
 
 def init_logging() -> None:
@@ -79,10 +85,10 @@ def show_login_page() -> None:
 def create_navigation() -> StreamlitPage:
     """Create Navigation Sidebar."""
     lst: list[StreamlitPage] = []
-    lst.append(st.Page(page="reports/r00_info.py", title="Info"))
-    lst.append(st.Page(page="reports/r01_self.py", title="Selbstauskunft"))
-    lst.append(st.Page(page="reports/r02_chat.py", title="Chat"))
-    lst.append(st.Page(page="reports/r99_logout.py", title="Logout"))
+    lst.append(st.Page(page="reports/r00_info.py", title=r00_title))
+    lst.append(st.Page(page="reports/r01_self.py", title=r01_title))
+    lst.append(st.Page(page="reports/r02_chat.py", title=r02_title))
+    lst.append(st.Page(page="reports/r99_logout.py", title=r99_title))
     page = st.navigation(pages=lst, position="sidebar", expanded=True)
     page.run()
     return page
