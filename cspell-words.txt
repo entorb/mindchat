@@ -1,0 +1,27 @@
+# CSpell Custom Dictionary Words
+entorb
+gemini
+genai
+matomo
+Matomo
+mindchat
+MindChat
+mistralai
+numpy
+ollama
+Ollama
+openai
+pyarrow
+pycache
+pydantic
+pytest
+pythonpath
+ruzv
+selectbox
+SonarQube
+streamlit
+Streamlit
+supervisorctl
+tomli
+Uberspace
+webstats
