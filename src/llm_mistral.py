@@ -1,20 +1,26 @@
-"""Ollama LLM provider implementation."""
+"""OpenAI LLM provider implementation."""
 
-import ollama
+import logging
+
+import streamlit as st
+from mistralai import Mistral
 
 from config import LLM_MODEL
 from llm import LLMProvider
 
+logger = logging.getLogger(__name__)
 
-class OllamaProvider(LLMProvider):
-    """Ollama-based LLM provider."""
+
+class MistralProvider(LLMProvider):
+    """Mistral-based LLM provider."""
 
     def __init__(self, model: str = LLM_MODEL) -> None:  # noqa: D107
         self.model = model
+        self.client = Mistral(api_key=st.secrets["mistral_api_key"])
 
     def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
         """
-        Generate a response using Ollama with conversation history.
+        Generate a response using Mistral with conversation history.
 
         Args:
             system_message: The system instruction for the LLM
@@ -27,11 +33,12 @@ class OllamaProvider(LLMProvider):
         api_messages = [{"role": "system", "content": system_message}]
         api_messages.extend(messages)
 
-        response = ollama.chat(
+        response = self.client.chat.complete(
             model=self.model,
-            messages=api_messages,
+            messages=api_messages,  # type: ignore
+            stream=False,
         )
-        return response["message"]["content"]
+        return str(response.choices[0].message.content)
 
     def generate(self, system_message: str, prompt: str) -> str:
         """Single message chat."""

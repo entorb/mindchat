@@ -18,27 +18,6 @@ class OpenAIProvider(LLMProvider):
         self.model = model
         self.client = OpenAI(api_key=st.secrets["openai_api_key"])
 
-    def generate(self, system_message: str, prompt: str) -> str:
-        """
-        Generate a response using OpenAI.
-
-        Args:
-            system_message: The system instruction for the LLM
-            prompt: The user prompt to respond to
-
-        Returns:
-            The generated response
-
-        """
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": prompt},
-            ],
-        )
-        return response.choices[0].message.content or ""
-
     def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
         """
         Generate a response using OpenAI with conversation history.
@@ -46,9 +25,6 @@ class OpenAIProvider(LLMProvider):
         Args:
             system_message: The system instruction for the LLM
             messages: List of message dicts with 'role' and 'content' keys
-
-        Returns:
-            The generated response
 
         """
         api_messages = [{"role": "system", "content": system_message}]
@@ -59,3 +35,13 @@ class OpenAIProvider(LLMProvider):
             messages=api_messages,  # type: ignore
         )
         return response.choices[0].message.content or ""
+
+    def generate(self, system_message: str, prompt: str) -> str:
+        """Single message chat."""
+        return self.chat(
+            system_message=system_message,
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": prompt},
+            ],
+        )

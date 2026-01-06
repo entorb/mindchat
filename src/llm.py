@@ -10,20 +10,6 @@ class LLMProvider(ABC):
     """Abstract base class for LLM providers."""
 
     @abstractmethod
-    def generate(self, system_message: str, prompt: str) -> str:
-        """
-        Generate a response from the LLM.
-
-        Args:
-            system_message: The system instruction for the LLM
-            prompt: The user prompt to respond to
-
-        Returns:
-            The generated response
-
-        """
-
-    @abstractmethod
     def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
         """
         Generate a response from the LLM using conversation history.
@@ -37,10 +23,14 @@ class LLMProvider(ABC):
 
         """
 
+    @abstractmethod
+    def generate(self, system_message: str, prompt: str) -> str:
+        """Single message chat."""
+
 
 # Factory function to get LLM provider
 @lru_cache(maxsize=1)
-def get_llm_provider(provider: str = LLM_PROVIDER, **kwargs) -> LLMProvider:  # noqa: ANN003
+def get_llm_provider(provider: str = LLM_PROVIDER) -> LLMProvider:
     """
     Get an LLM provider instance.
 
@@ -55,10 +45,17 @@ def get_llm_provider(provider: str = LLM_PROVIDER, **kwargs) -> LLMProvider:  # 
     if provider == "Ollama":
         from llm_ollama import OllamaProvider  # noqa: PLC0415
 
-        return OllamaProvider(**kwargs)
+        return OllamaProvider()
+
     if provider == "OpenAI":
         from llm_openai import OpenAIProvider  # noqa: PLC0415
 
-        return OpenAIProvider(**kwargs)
+        return OpenAIProvider()
+
+    if provider == "Mistral":
+        from llm_mistral import MistralProvider  # noqa: PLC0415
+
+        return MistralProvider()
+
     msg = f"Unknown LLM provider: {provider}"
     raise ValueError(msg)
