@@ -7,10 +7,12 @@ import streamlit as st
 from config import (
     ENV,
     LLM_PROVIDERS,
+    PAGE_ICON,
     SS_KEY_LLM_MODEL,
     SS_KEY_LLM_MODELS_LIST,
     SS_KEY_LLM_PROVIDER,
     SS_KEY_LLM_PROVIDER_INSTANCE,
+    SS_KEY_LOGGED_IN,
 )
 from helper import (
     create_navigation,
@@ -18,11 +20,19 @@ from helper import (
     show_login_page,
 )
 from llm import get_cached_llm_provider
+from texts import (
+    app_title,
+    main_error_llm_provider,
+    main_error_unexpected,
+    main_info_check_config,
+    main_llm_label,
+    main_model_label,
+)
 
 # must be first Streamlit command
 st.set_page_config(
-    page_title="Mind Chat",
-    page_icon=":sun_behind_small_cloud:",
+    page_title=app_title,
+    page_icon=PAGE_ICON,
     layout="wide",
 )
 
@@ -44,27 +54,19 @@ def _clear_llm_cache() -> None:
 
 def main() -> None:  # noqa: D103
     # Login, only on prod
-    if ENV == "Prod" and not st.session_state.get("logged_in", False):
+    if ENV == "Prod" and not st.session_state.get(SS_KEY_LOGGED_IN, False):
         show_login_page()
         return
 
     _page = create_navigation()
 
-    # LLM provider select
-    if SS_KEY_LLM_PROVIDER not in st.session_state:
-        st.session_state[SS_KEY_LLM_PROVIDER] = LLM_PROVIDERS[0]
-
-    default_index = LLM_PROVIDERS.index(st.session_state[SS_KEY_LLM_PROVIDER])
-    sel_provider = st.sidebar.selectbox(
-        "LLM",
+    # Use key parameter for automatic session state binding
+    st.sidebar.selectbox(
+        main_llm_label,
         LLM_PROVIDERS,
-        index=default_index,
+        key=SS_KEY_LLM_PROVIDER,
+        on_change=_clear_llm_cache,
     )
-    # Handle provider change
-    if sel_provider != st.session_state[SS_KEY_LLM_PROVIDER]:
-        st.session_state[SS_KEY_LLM_PROVIDER] = sel_provider
-        _clear_llm_cache()
-        st.rerun()
 
     # Get models list - cache for performance
     if SS_KEY_LLM_MODELS_LIST not in st.session_state:
@@ -72,21 +74,13 @@ def main() -> None:  # noqa: D103
             llm_provider = get_cached_llm_provider()
             st.session_state[SS_KEY_LLM_MODELS_LIST] = llm_provider.models
         except (ValueError, ConnectionError) as e:
-            st.error(f"❌ LLM Provider Error: {e}")
-            st.info(
-                "💡 Please check your configuration or select a different provider."
-            )
+            st.error(main_error_llm_provider.format(e))
+            st.info(main_info_check_config)
             st.stop()
     models = st.session_state[SS_KEY_LLM_MODELS_LIST]
 
-    # Model select
-    if SS_KEY_LLM_MODEL not in st.session_state:
-        st.session_state[SS_KEY_LLM_MODEL] = models[0]
-
-    default_index = models.index(st.session_state[SS_KEY_LLM_MODEL])
-    sel_model = st.sidebar.selectbox("Modell", models, index=default_index)
-    if sel_model != st.session_state[SS_KEY_LLM_MODEL]:
-        st.session_state[SS_KEY_LLM_MODEL] = sel_model
+    # Use key parameter for automatic session state binding
+    st.sidebar.selectbox(main_model_label, models, key=SS_KEY_LLM_MODEL)
 
 
 if __name__ == "__main__":
@@ -94,5 +88,9 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         logger.exception("Exception:")
-        st.exception(e)
+        # Use st.error for production to avoid exposing stack traces
+        if ENV == "Prod":
+            st.error(main_error_unexpected)
+        else:
+            st.exception(e)
         st.stop()
