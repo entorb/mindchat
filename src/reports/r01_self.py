@@ -6,12 +6,12 @@ import streamlit as st
 
 from config import (
     SD_TEMPLATE_PATH,
-    SPINNER_MESSAGES,
     SS_KEY_LLM_MODEL,
     SS_KEY_SD,
 )
 from llm import get_cached_llm_provider
 from texts import (
+    SPINNER_MESSAGES,
     r01_btn_feedback,
     r01_btn_save,
     r01_feedback_prompt,

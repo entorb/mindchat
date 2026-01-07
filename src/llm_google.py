@@ -24,6 +24,12 @@ class GoogleProvider(LLMProvider):
     def __init__(self) -> None:  # noqa: D107
         super().__init__(models=MODELS)
         try:
+            if (
+                not st.secrets.has_key("google_api_key")
+                or st.secrets["google_api_key"] == ""
+            ):
+                st.error("Set your Google API key in .streamlit/secrets.toml")
+                st.stop()
             # Create a new client instance for each session (no shared state)
             self.client = genai.Client(api_key=st.secrets["google_api_key"])
         except KeyError:
