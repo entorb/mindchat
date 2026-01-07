@@ -1,4 +1,5 @@
 # CSpell Custom Dictionary Words
+deepseek
 entorb
 gemini
 genai
