@@ -2,43 +2,34 @@
 
 import ollama
 
-from config import LLM_MODEL
 from llm import LLMProvider
+
+MODELS = [
+    "mistral",
+    "llama3.2:1b",
+    "llama3.2:3b",
+    "deepseek-r1:1.5b",
+    "deepseek-r1:8b",
+    "deepseek-r1:7b",
+]
 
 
 class OllamaProvider(LLMProvider):
     """Ollama-based LLM provider."""
 
-    def __init__(self, model: str = LLM_MODEL) -> None:  # noqa: D107
-        self.model = model
+    def __init__(self) -> None:  # noqa: D107
+        super().__init__(models=MODELS)
 
-    def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
-        """
-        Generate a response using Ollama with conversation history.
+    def chat(  # noqa: D102
+        self, model: str, system_message: str, messages: list[dict[str, str]]
+    ) -> str:
+        self.check_model(model)
 
-        Args:
-            system_message: The system instruction for the LLM
-            messages: List of message dicts with 'role' and 'content' keys
-
-        Returns:
-            The generated response
-
-        """
         api_messages = [{"role": "system", "content": system_message}]
         api_messages.extend(messages)
 
         response = ollama.chat(
-            model=self.model,
+            model=model,
             messages=api_messages,
         )
         return response["message"]["content"]
-
-    def generate(self, system_message: str, prompt: str) -> str:
-        """Single message chat."""
-        return self.chat(
-            system_message=system_message,
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": prompt},
-            ],
-        )
