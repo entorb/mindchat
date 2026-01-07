@@ -90,9 +90,11 @@ def main() -> None:  # noqa: D103
         # Generate assistant response
         with st.chat_message("assistant"), st.spinner(random.choice(SPINNER_MESSAGES)):  # noqa: S311
             # Call LLM
-            llm = get_llm_provider()
+            llm = get_llm_provider(st.session_state["LLM_PROVIDER"])
             response = llm.chat(
-                system_message=system_message, messages=st.session_state.chat_messages
+                model=st.session_state["LLM_MODEL"],
+                system_message=system_message,
+                messages=st.session_state.chat_messages,
             )
 
             # Display

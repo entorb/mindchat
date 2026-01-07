@@ -3,18 +3,25 @@
 from abc import ABC, abstractmethod
 from functools import lru_cache
 
-from config import LLM_PROVIDER
-
 
 class LLMProvider(ABC):
     """Abstract base class for LLM providers."""
 
+    def __init__(self, models: list[str]) -> None:  # noqa: D107
+        self.models = models
+
+    def check_model(self, model: str) -> None:  # noqa: D102
+        assert model in self.models
+
     @abstractmethod
-    def chat(self, system_message: str, messages: list[dict[str, str]]) -> str:
+    def chat(
+        self, model: str, system_message: str, messages: list[dict[str, str]]
+    ) -> str:
         """
-        Generate a response from the LLM using conversation history.
+        Generate a response using Ollama with conversation history.
 
         Args:
+            model: the LLM model to use, must be one of self.models
             system_message: The system instruction for the LLM
             messages: List of message dicts with 'role' and 'content' keys
 
@@ -23,14 +30,21 @@ class LLMProvider(ABC):
 
         """
 
-    @abstractmethod
-    def generate(self, system_message: str, prompt: str) -> str:
+    def generate(self, model: str, system_message: str, prompt: str) -> str:
         """Single message chat."""
+        return self.chat(
+            model=model,
+            system_message=system_message,
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": prompt},
+            ],
+        )
 
 
 # Factory function to get LLM provider
 @lru_cache(maxsize=1)
-def get_llm_provider(provider: str = LLM_PROVIDER) -> LLMProvider:
+def get_llm_provider(provider: str) -> LLMProvider:
     """
     Get an LLM provider instance.
 
@@ -56,6 +70,11 @@ def get_llm_provider(provider: str = LLM_PROVIDER) -> LLMProvider:
         from llm_mistral import MistralProvider  # noqa: PLC0415
 
         return MistralProvider()
+
+    if provider == "Google":
+        from llm_google import GoogleProvider  # noqa: PLC0415
+
+        return GoogleProvider()
 
     msg = f"Unknown LLM provider: {provider}"
     raise ValueError(msg)
