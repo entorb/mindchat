@@ -17,31 +17,28 @@ from texts import (
     r01_feedback_prompt,
     r01_header_feedback,
     r01_self_info,
+    r01_success_saved,
     r01_textarea_label,
     r01_title,
 )
 
 
-def main() -> None:  # noqa: D103
-    st.title(r01_title)
-
-    st.markdown(r01_self_info)
-
-    if SS_KEY_SD in st.session_state:
-        self_disclosure = st.session_state[SS_KEY_SD]
-    else:
-        # initialize from template
+@st.fragment
+def text_editor() -> None:
+    """Fragment for text editor to avoid full reruns."""
+    # Initialize from template if not in session state
+    if SS_KEY_SD not in st.session_state:
         self_disclosure = SD_TEMPLATE_PATH.read_text(encoding="utf-8")
+        st.session_state[SS_KEY_SD] = self_disclosure
 
     text_content = st.text_area(
         label=r01_textarea_label,
-        value=self_disclosure,
-        height=800,  # fallback height
+        value=st.session_state[SS_KEY_SD],
+        height=800,
     )
-    # 2nd save button to prevent data loss
-    btn_save = st.button(r01_btn_save, type="primary")
 
-    if btn_save and text_content:
+    # Save button to process and save content
+    if st.button(r01_btn_save, type="primary") and text_content:
         text_content = text_content.strip()
         # loop over all lines
         lines = text_content.split("\n")
@@ -55,7 +52,18 @@ def main() -> None:  # noqa: D103
 
         if text_content != "":
             st.session_state[SS_KEY_SD] = text_content
+            st.success(r01_success_saved)
 
+
+def main() -> None:  # noqa: D103
+    st.title(r01_title)
+
+    st.markdown(r01_self_info)
+
+    # Text editor fragment
+    text_editor()
+
+    # Feedback section (separate from fragment to avoid re-rendering)
     if SS_KEY_SD in st.session_state and st.session_state[SS_KEY_SD] != "":
         st.header(r01_header_feedback)
         btn_feedback = st.button(r01_btn_feedback)
@@ -67,7 +75,7 @@ def main() -> None:  # noqa: D103
                 response = llm.generate(
                     model=st.session_state[SS_KEY_LLM_MODEL],
                     system_message=instruction,
-                    prompt=text_content,
+                    prompt=st.session_state[SS_KEY_SD],
                 )
                 st.markdown(response)
 

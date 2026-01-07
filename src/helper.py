@@ -7,8 +7,17 @@ import time
 import streamlit as st
 from streamlit.navigation.page import StreamlitPage
 
-from config import WEBSTATS_SCRIPT
+from config import (
+    SS_KEY_LOGGED_IN,
+    WEBSTATS_SCRIPT,
+)
 from texts import (
+    app_title,
+    login_btn_label,
+    login_dialog_title,
+    login_error_wrong,
+    login_input_label,
+    login_prompt,
     r00_title,
     r01_title,
     r02_title,
@@ -64,23 +73,27 @@ def init_logging() -> None:
 #     )
 
 
-def show_login_page() -> None:
-    """Display login page and handle authentication."""
-    st.title("Login")
-    st.write("Frage Torben nach dem Geheimnis.")
+@st.dialog(login_dialog_title, width="small")
+def show_login_dialog() -> None:
+    """Display login dialog and handle authentication."""
+    st.write(login_prompt)
 
-    input_password = st.text_input(
-        "Geheimnis", type="password", key="login_password_input"
-    )
+    password = st.text_input(login_input_label, type="password")
 
-    if st.button("Anmelden") or input_password:
-        if input_password == st.secrets["login_password"]:
-            st.session_state["logged_in"] = True
+    if st.button(login_btn_label, type="primary") or password:
+        if password == st.secrets["login_password"]:
+            st.session_state[SS_KEY_LOGGED_IN] = True
             subprocess.run([WEBSTATS_SCRIPT, "mindchat"], check=False, shell=False)  # noqa: S603
             st.rerun()
         else:
             time.sleep(3)  # Mitigate brute-force attacks
-            st.warning("Falsch!")
+            st.warning(login_error_wrong)
+
+
+def show_login_page() -> None:
+    """Show login page with dialog."""
+    st.title(app_title)
+    show_login_dialog()
 
 
 def create_navigation() -> StreamlitPage:
