@@ -1,6 +1,7 @@
 """OpenAI LLM provider implementation."""
 
 import logging
+from typing import Any
 
 import streamlit as st
 from openai import OpenAI
@@ -26,7 +27,9 @@ class OpenAIProvider(LLMProvider):
             self.client = OpenAI(api_key=st.secrets["openai_api_key"])
         except KeyError:
             logger.exception("OpenAI API key not found in secrets")
-            msg = "OpenAI API key not configured. Please add 'openai_api_key' to secrets."
+            msg = (
+                "OpenAI API key not configured. Please add 'openai_api_key' to secrets."
+            )
             raise ValueError(msg) from None
         except Exception:
             logger.exception("Failed to initialize OpenAI client")
@@ -54,20 +57,21 @@ class OpenAIProvider(LLMProvider):
         self.check_model(model)
 
         try:
-            api_messages = [{"role": "system", "content": system_message}]
+            api_messages: list[dict[str, Any]] = [
+                {"role": "system", "content": system_message}
+            ]
             api_messages.extend(messages)
 
             response = self.client.chat.completions.create(
                 model=model,
-                messages=api_messages,  # type: ignore[arg-type]
+                messages=api_messages,
             )
 
             content = response.choices[0].message.content
             if not content:
                 logger.warning("Empty response from OpenAI")
-                return ""
-
-            return content
+            else:
+                return content
 
         except Exception:
             logger.exception("OpenAI API error")

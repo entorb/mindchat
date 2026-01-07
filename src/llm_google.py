@@ -1,6 +1,7 @@
 """Google Gemini LLM provider implementation."""
 
 import logging
+from typing import Any
 
 import streamlit as st
 from google import genai
@@ -27,7 +28,9 @@ class GoogleProvider(LLMProvider):
             self.client = genai.Client(api_key=st.secrets["google_api_key"])
         except KeyError:
             logger.exception("Google API key not found in secrets")
-            msg = "Google API key not configured. Please add 'google_api_key' to secrets."
+            msg = (
+                "Google API key not configured. Please add 'google_api_key' to secrets."
+            )
             raise ValueError(msg) from None
         except Exception:
             logger.exception("Failed to initialize Google client")
@@ -58,7 +61,7 @@ class GoogleProvider(LLMProvider):
             # Convert messages to Gemini format
             # Gemini expects alternating user/model messages
             # Filter out system messages as they're handled separately
-            gemini_messages = []
+            gemini_messages: list[dict[str, Any]] = []
             for msg in messages[:-1]:  # All except the last message
                 if msg["role"] == "system":
                     continue  # Skip system messages in history
@@ -75,7 +78,7 @@ class GoogleProvider(LLMProvider):
                 config=genai_types.GenerateContentConfig(
                     system_instruction=system_message
                 ),
-                history=gemini_messages,  # type: ignore[arg-type]
+                history=gemini_messages,
             )
 
             # Send the latest user message

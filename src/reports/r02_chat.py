@@ -7,7 +7,12 @@ from datetime import UTC, datetime
 
 import streamlit as st
 
-from config import SPINNER_MESSAGES, SS_KEY_LLM_MODEL, SS_KEY_SD
+from config import (
+    SPINNER_MESSAGES,
+    SS_KEY_CHAT_HISTORY,
+    SS_KEY_LLM_MODEL,
+    SS_KEY_SD,
+)
 from llm import get_cached_llm_provider
 from models import ChatHistory
 from texts import (
@@ -38,13 +43,14 @@ def generate_markdown_export(system_message: str, history: ChatHistory) -> str:
     return markdown
 
 
+@st.fragment
 def show_history_buttons(system_message: str, history: ChatHistory) -> None:
-    """Show download and clear history buttons."""
+    """Show download and clear history buttons (wrapped in fragment)."""
     cols = st.columns(2)
 
     markdown_content = generate_markdown_export(system_message, history)
 
-    filename = f"mindchat_{datetime.now(UTC).strftime('%Y%m%d_%H%M')}.md"
+    filename = f"mindchat_{datetime.now(UTC).strftime('%Y%m%d_%H%M')}.md.txt"
 
     cols[0].download_button(
         label=r02_hist_btn_download,
@@ -54,8 +60,8 @@ def show_history_buttons(system_message: str, history: ChatHistory) -> None:
     )
 
     if cols[1].button(r02_hist_btn_del):
-        del st.session_state.chat_history
-        st.rerun()
+        del st.session_state[SS_KEY_CHAT_HISTORY]
+        # No st.rerun() needed - Streamlit auto-reruns on state change
 
 
 def main() -> None:  # noqa: D103
@@ -70,21 +76,23 @@ def main() -> None:  # noqa: D103
 
     # Initialize chat history with Pydantic model
     # This persists across provider/model changes
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = ChatHistory(system_message=system_message)
+    if SS_KEY_CHAT_HISTORY not in st.session_state:
+        st.session_state[SS_KEY_CHAT_HISTORY] = ChatHistory(
+            system_message=system_message
+        )
     else:
         # Update system message if it changed
-        st.session_state.chat_history.system_message = system_message
+        st.session_state[SS_KEY_CHAT_HISTORY].system_message = system_message
 
     # Display chat messages from history
-    for message in st.session_state.chat_history.messages:
+    for message in st.session_state[SS_KEY_CHAT_HISTORY].messages:
         with st.chat_message(message.role):
             st.write(message.content)
 
     # Chat input
     if user_input := st.chat_input(r02_chat_input):
         # Add user message to chat history
-        st.session_state.chat_history.add_message("user", user_input)
+        st.session_state[SS_KEY_CHAT_HISTORY].add_message("user", user_input)
 
         # Display user message
         with st.chat_message("user"):
@@ -97,18 +105,18 @@ def main() -> None:  # noqa: D103
             response = llm.chat(
                 model=st.session_state[SS_KEY_LLM_MODEL],
                 system_message=system_message,
-                messages=st.session_state.chat_history.to_api_format(),
+                messages=st.session_state[SS_KEY_CHAT_HISTORY].to_api_format(),
             )
 
             # Display
             st.write(response)
 
             # Add assistant response to chat history
-            st.session_state.chat_history.add_message("assistant", response)
+            st.session_state[SS_KEY_CHAT_HISTORY].add_message("assistant", response)
 
     # Show history buttons only if there are chat messages
-    if len(st.session_state.chat_history) > 0:
-        show_history_buttons(system_message, st.session_state.chat_history)
+    if st.session_state[SS_KEY_CHAT_HISTORY].messages:
+        show_history_buttons(system_message, st.session_state[SS_KEY_CHAT_HISTORY])
 
 
 if __name__ == "__main__":

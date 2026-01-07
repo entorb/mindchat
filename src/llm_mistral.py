@@ -1,6 +1,7 @@
 """Mistral LLM provider implementation."""
 
 import logging
+from typing import Any
 
 import streamlit as st
 from mistralai import Mistral
@@ -22,7 +23,10 @@ class MistralProvider(LLMProvider):
             self.client = Mistral(api_key=st.secrets["mistral_api_key"])
         except KeyError:
             logger.exception("Mistral API key not found in secrets")
-            msg = "Mistral API key not configured. Please add 'mistral_api_key' to secrets."
+            msg = (
+                "Mistral API key not configured. "
+                "Please add 'mistral_api_key' to secrets."
+            )
             raise ValueError(msg) from None
         except Exception:
             logger.exception("Failed to initialize Mistral client")
@@ -50,12 +54,14 @@ class MistralProvider(LLMProvider):
         self.check_model(model)
 
         try:
-            api_messages = [{"role": "system", "content": system_message}]
+            api_messages: list[dict[str, Any]] = [
+                {"role": "system", "content": system_message}
+            ]
             api_messages.extend(messages)
 
             response = self.client.chat.complete(
                 model=model,
-                messages=api_messages,  # type: ignore[arg-type]
+                messages=api_messages,
                 stream=False,
             )
 
