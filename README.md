@@ -3,6 +3,40 @@
 AI-based chat application for self-analysis and mental health support.
 **⚠️ Important Disclaimer:** This is an AI-based chat application that can provide suggestions and tips. It does NOT replace professional help. If you are experiencing serious mental health issues or are in a crisis situation, please contact qualified professionals.
 
+## Run locally
+
+### Prerequisites
+
+- [UV](https://docs.astral.sh/uv/) - Fast Python package manager, that handles Python versions and virtual environments
+- [Ollama](https://ollama.com/) - For local LLM support with a local [model](https://ollama.com/search) installed, e.g. `mistral`
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/entorb/mindchat.git
+cd mindchat
+
+# Install dependencies
+uv sync
+```
+
+### Configuration
+
+List the locally installed Ollama model(s) in [src/llm_ollama.py](src/llm_ollama.py).
+
+Create a `.streamlit/secrets.toml` file based on [.streamlit/secrets-EXAMPLE.toml](.streamlit/secrets-EXAMPLE.toml):
+
+**Note:** For local usage with Ollama, you do not need to set any of the variables.
+
+### Run the application
+
+```bash
+uv run streamlit run src/main.py
+```
+
+The app will open in your browser at `http://localhost:8504`.
+
 ## Features
 
 Currently only German language is implemented, but all texts are in one [central file](src/texts.py), so it is very simple to translate or to add multi-language support.
