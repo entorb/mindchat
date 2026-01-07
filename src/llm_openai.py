@@ -23,6 +23,12 @@ class OpenAIProvider(LLMProvider):
     def __init__(self) -> None:  # noqa: D107
         super().__init__(models=MODELS)
         try:
+            if (
+                not st.secrets.has_key("openai_api_key")
+                or st.secrets["openai_api_key"] == ""
+            ):
+                st.error("Set your OpenAI API key in .streamlit/secrets.toml")
+                st.stop()
             # Create a new client instance for each session (no shared state)
             self.client = OpenAI(api_key=st.secrets["openai_api_key"])
         except KeyError:
