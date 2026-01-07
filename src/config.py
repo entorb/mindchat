@@ -10,17 +10,9 @@ SD_KEY = "my-self-disclosure"
 ENV = "Prod" if PROD_PATH.exists() else "Local"
 
 if ENV == "Prod":
-    LLM_PROVIDER = "OpenAI"
-    LLM_MODEL = "gpt-5-mini"  # gpt-5-nano, gpt-5-mini, gpt-5
-if ENV == "Ollama":
-    LLM_PROVIDER = "Ollama"
-    LLM_MODEL = "mistral"  # mistral, llama3.2
-if ENV == "Mistral":
-    LLM_PROVIDER = "Mistral"
-    LLM_MODEL = "mistral-medium-latest"
+    LLM_PROVIDERS = ["OpenAI"]
 else:
-    LLM_PROVIDER = "Ollama"
-    LLM_MODEL = "mistral"  # mistral, llama3.2
+    LLM_PROVIDERS = ["Ollama", "OpenAI", "Mistral", "Google"]
 
 SPINNER_MESSAGES = [
     "Magic happens…",
