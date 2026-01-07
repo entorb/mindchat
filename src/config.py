@@ -23,12 +23,6 @@ if ENV == "Prod":
 else:
     LLM_PROVIDERS = ["Ollama", "OpenAI", "Mistral", "Google"]
 
-SPINNER_MESSAGES = [
-    "Magic happens…",
-    "Schmelze Gletscher…",
-    "Falte Raum, Zeit und Tokens…",
-    "Zeit zum Durchatmen…",
-]
 
 # Page configuration
 PAGE_ICON = ":sun_behind_small_cloud:"

@@ -8,7 +8,6 @@ from datetime import UTC, datetime
 import streamlit as st
 
 from config import (
-    SPINNER_MESSAGES,
     SS_KEY_CHAT_HISTORY,
     SS_KEY_LLM_MODEL,
     SS_KEY_SD,
@@ -16,6 +15,7 @@ from config import (
 from llm import get_cached_llm_provider
 from models import ChatHistory
 from texts import (
+    SPINNER_MESSAGES,
     r02_chat_info,
     r02_chat_input,
     r02_export_heading0,

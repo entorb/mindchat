@@ -126,3 +126,11 @@ r99_logout = """
 
 Deine Daten wurden aus dem Arbeitsspeicher des Servers gelöscht
 """
+
+
+SPINNER_MESSAGES = [
+    "Magic happens…",
+    "Schmelze Gletscher…",
+    "Falte Raum, Zeit und Tokens…",
+    "Zeit zum Durchatmen…",
+]

@@ -1,6 +1,12 @@
 #!/bin/sh
 cd $(dirname $0)/..
 
+# update time stamp of main.py for version info
+touch src/main.py
+
+ruff format || exit 1
+ruff check || exit 1
+
 echo copying
 # requirements
 uv run scripts/gen_requirements.py
