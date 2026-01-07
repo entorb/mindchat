@@ -59,8 +59,12 @@ def main() -> None:  # noqa: D103
         if btn_feedback:
             with st.spinner(random.choice(SPINNER_MESSAGES)):  # noqa: S311
                 instruction = r01_feedback_prompt
-                llm = get_llm_provider()
-                response = llm.generate(instruction, prompt=text_content)
+                llm = get_llm_provider(st.session_state["LLM_PROVIDER"])
+                response = llm.generate(
+                    model=st.session_state["LLM_MODEL"],
+                    system_message=instruction,
+                    prompt=text_content,
+                )
                 st.markdown(response)
 
 
