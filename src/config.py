@@ -1,6 +1,7 @@
 """Configuration."""
 
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 PROD_PATH = Path("/var/www/virtual/entorb/html")
 WEBSTATS_SCRIPT = "/var/www/virtual/entorb/web-stats.py"
@@ -26,3 +27,5 @@ else:
 
 # Page configuration
 PAGE_ICON = ":sun_behind_small_cloud:"
+
+TIMEZONE = ZoneInfo("Europe/Berlin")
