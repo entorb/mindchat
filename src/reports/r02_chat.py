@@ -3,7 +3,6 @@ Chat.
 """
 
 import random
-from datetime import UTC, datetime
 
 import streamlit as st
 
@@ -12,6 +11,7 @@ from config import (
     SS_KEY_LLM_MODEL,
     SS_KEY_SD,
 )
+from helper import current_date_time_for_filenames
 from llm import get_cached_llm_provider
 from models import ChatHistory
 from texts import (
@@ -50,7 +50,7 @@ def show_history_buttons(system_message: str, history: ChatHistory) -> None:
 
     markdown_content = generate_markdown_export(system_message, history)
 
-    filename = f"mindchat_{datetime.now(UTC).strftime('%Y%m%d_%H%M')}.md.txt"
+    filename = f"mindchat_chat_{current_date_time_for_filenames()}.md.txt"
 
     cols[0].download_button(
         label=r02_hist_btn_download,

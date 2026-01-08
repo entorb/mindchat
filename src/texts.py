@@ -78,6 +78,7 @@ Fülle diese Selbstauskunft aus, damit Du mit der KI über Dich chatten kannst
 r01_textarea_label = "Verfassen der Selbstauskunft"
 r01_btn_save = "Speichern"
 r01_success_saved = "✅ gespeichert!"
+r01_btn_download = "Download"
 
 # Feedback section
 r01_header_feedback = "Feedback"

@@ -9,9 +9,11 @@ from config import (
     SS_KEY_LLM_MODEL,
     SS_KEY_SD,
 )
+from helper import current_date_time_for_filenames
 from llm import get_cached_llm_provider
 from texts import (
     SPINNER_MESSAGES,
+    r01_btn_download,
     r01_btn_feedback,
     r01_btn_save,
     r01_feedback_prompt,
@@ -23,22 +25,24 @@ from texts import (
 )
 
 
-@st.fragment
 def text_editor() -> None:
-    """Fragment for text editor to avoid full reruns."""
+    """Text editor."""
     # Initialize from template if not in session state
     if SS_KEY_SD not in st.session_state:
         self_disclosure = SD_TEMPLATE_PATH.read_text(encoding="utf-8")
-        st.session_state[SS_KEY_SD] = self_disclosure
+    else:
+        self_disclosure = st.session_state[SS_KEY_SD]
 
     text_content = st.text_area(
         label=r01_textarea_label,
-        value=st.session_state[SS_KEY_SD],
+        value=self_disclosure,
         height=800,
     )
 
     # Save button to process and save content
-    if st.button(r01_btn_save, type="primary") and text_content:
+    btn_save = st.button(r01_btn_save, type="primary")
+
+    if btn_save and text_content:
         text_content = text_content.strip()
         # loop over all lines
         lines = text_content.split("\n")
@@ -54,21 +58,29 @@ def text_editor() -> None:
             st.session_state[SS_KEY_SD] = text_content
             st.success(r01_success_saved)
 
+    if SS_KEY_SD in st.session_state:
+        filename = f"mindchat_self_{current_date_time_for_filenames()}.md.txt"
+        _btn_download = st.download_button(
+            label=r01_btn_download,
+            data=st.session_state[SS_KEY_SD],
+            file_name=filename,
+            mime="text/markdown",
+        )
+
 
 def main() -> None:  # noqa: D103
     st.title(r01_title)
 
     st.markdown(r01_self_info)
 
-    # Text editor fragment
     text_editor()
 
-    # Feedback section (separate from fragment to avoid re-rendering)
-    if SS_KEY_SD in st.session_state and st.session_state[SS_KEY_SD] != "":
-        st.header(r01_header_feedback)
+    # Download and Feedback section (separate from fragment to avoid re-rendering)
+    if SS_KEY_SD in st.session_state:
         btn_feedback = st.button(r01_btn_feedback)
 
         if btn_feedback:
+            st.header(r01_header_feedback)
             with st.spinner(random.choice(SPINNER_MESSAGES)):  # noqa: S311
                 instruction = r01_feedback_prompt
                 llm = get_cached_llm_provider()
