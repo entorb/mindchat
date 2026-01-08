@@ -5,7 +5,6 @@ import logging
 import subprocess
 import time
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 import streamlit as st
 from streamlit.navigation.page import StreamlitPage
@@ -17,6 +16,7 @@ from config import (
     SS_KEY_LLM_PROVIDER,
     SS_KEY_LLM_PROVIDER_INSTANCE,
     SS_KEY_LOGGED_IN,
+    TIMEZONE,
     WEBSTATS_SCRIPT,
 )
 from llm import get_cached_llm_provider
@@ -164,5 +164,10 @@ def version_date_in_sidebar() -> None:
     """Display last modification date of main.py."""
     deployment_date = dt.datetime.fromtimestamp(
         Path("src/main.py").stat().st_mtime, tz=dt.UTC
-    ).astimezone(ZoneInfo("Europe/Berlin"))
+    ).astimezone(TIMEZONE)
     st.sidebar.markdown(f"Stand: {deployment_date.strftime('%d.%m.%y %H:%M')}")
+
+
+def current_date_time_for_filenames() -> str:
+    """Return current date and time."""
+    return dt.datetime.now(tz=TIMEZONE).strftime("%Y%m%d_%H%M")
