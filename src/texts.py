@@ -69,7 +69,6 @@ Fülle diese Selbstauskunft aus, damit Du mit der KI über Dich chatten kannst
 
 - ⏰ **Nimm Dir Zeit:** Je genauer und ausführlicher Du Dich beschreibst, desto hilfreicher werden die KI-Antworten.
 - 📋 **Struktur:** Zeilen mit '##' sind Überschriften - lösche gerne irrelevante Abschnitte oder füge eigene hinzu.
-- 💾 **Speichern nicht vergessen:** Klicke auf **Speichern**, um Deine Angaben zu übernehmen.
 - 🔐 **Privatsphäre:** Gib **keine** persönlichen Daten wie Namen, Adressen etc. ein.
 - 💡**Optional**
   - **Lokal speichern:** Falls Du diese App später nochmal nutzen möchtest, speichere Deine Selbstauskunft auf Deinem Gerät, denn beim Abmelden werden alle Daten vom Server gelöscht.
@@ -77,8 +76,6 @@ Fülle diese Selbstauskunft aus, damit Du mit der KI über Dich chatten kannst
 """
 
 r01_textarea_label = "Verfassen der Selbstauskunft"
-r01_btn_save = "Speichern"
-r01_success_saved = "✅ gespeichert!"
 r01_btn_download = "Download"
 
 # Feedback section
