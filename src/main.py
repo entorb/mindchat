@@ -11,10 +11,10 @@ from config import (
 )
 from helper import (
     create_navigation,
+    get_version_date_from_main_file,
     init_logging,
     llm_select_in_sidebar,
     show_login_page,
-    version_date_in_sidebar,
 )
 from texts import (
     app_title,
@@ -40,8 +40,15 @@ def main() -> None:  # noqa: D103
 
     page = create_navigation()
     page.run()
-    version_date_in_sidebar()
     llm_select_in_sidebar()
+    st.sidebar.divider()
+    st.sidebar.markdown(f"""
+Code Info
+- [Source Code](https://github.com/entorb/mindchat/)
+- [Contact](https://entorb.net/contact.php?origin=mindchat)
+
+Version {get_version_date_from_main_file()}
+""")
 
 
 if __name__ == "__main__":
