@@ -4,6 +4,7 @@
 
 # Main app texts
 app_title = "Mind Chat"
+main_llm_settings_title = "KI Einstellungen"
 main_llm_label = "LLM"
 main_model_label = "Modell"
 main_error_llm_provider = "❌ LLM Fehler: {}"
@@ -66,13 +67,13 @@ r01_title = "Selbstauskunft"
 r01_self_info = """
 Fülle diese Selbstauskunft aus, damit Du mit der KI über Dich chatten kannst
 
-- ⏰ **Nimm Dir Zeit:** Je genauer und ausführlicher Du Dich beschreibst, desto hilfreicher werden die KI-Antworten
-- 📋 **Struktur:** Zeilen mit '##' sind Überschriften - lösche gerne irrelevante Abschnitte oder füge eigene hinzu
-- 💾 **Speichern nicht vergessen:** Klicke auf **Speichern**, um Deine Angaben zu übernehmen
-- 🔐 **Privatsphäre:** Gib **keine** persönlichen Daten wie Namen, Adressen etc. ein
+- ⏰ **Nimm Dir Zeit:** Je genauer und ausführlicher Du Dich beschreibst, desto hilfreicher werden die KI-Antworten.
+- 📋 **Struktur:** Zeilen mit '##' sind Überschriften - lösche gerne irrelevante Abschnitte oder füge eigene hinzu.
+- 💾 **Speichern nicht vergessen:** Klicke auf **Speichern**, um Deine Angaben zu übernehmen.
+- 🔐 **Privatsphäre:** Gib **keine** persönlichen Daten wie Namen, Adressen etc. ein.
 - 💡**Optional**
-  - **KI-Feedback:** Nutze den Button unten, um ein KI-Feedback zu Deiner Selbstauskunft zu erhalten
-  - **Lokal speichern:** Falls Du diese App später nochmal nutzen möchtest, kopiere den Text und speichere ihn lokal auf Deinem Gerät (beim Abmelden werden alle Daten vom Server gelöscht)
+  - **Lokal speichern:** Falls Du diese App später nochmal nutzen möchtest, speichere Deine Selbstauskunft auf Deinem Gerät, denn beim Abmelden werden alle Daten vom Server gelöscht.
+  - **KI-Feedback:** Nutze den Button unten, um ein KI-Feedback zur Selbstauskunft zu erhalten.
 """
 
 r01_textarea_label = "Verfassen der Selbstauskunft"

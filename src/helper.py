@@ -30,6 +30,7 @@ from texts import (
     main_error_llm_provider,
     main_info_check_config,
     main_llm_label,
+    main_llm_settings_title,
     main_model_label,
     r00_title,
     r01_title,
@@ -138,6 +139,7 @@ def _clear_llm_cache() -> None:
 def llm_select_in_sidebar() -> None:
     """Add select for LLM provider and model to sidebar."""
     # Use key parameter for automatic session state binding
+    st.sidebar.write(main_llm_settings_title)
     st.sidebar.selectbox(
         main_llm_label,
         LLM_PROVIDERS,
@@ -160,12 +162,12 @@ def llm_select_in_sidebar() -> None:
     st.sidebar.selectbox(main_model_label, models, key=SS_KEY_LLM_MODEL)
 
 
-def version_date_in_sidebar() -> None:
+def get_version_date_from_main_file() -> str:
     """Display last modification date of main.py."""
     deployment_date = dt.datetime.fromtimestamp(
         Path("src/main.py").stat().st_mtime, tz=dt.UTC
     ).astimezone(TIMEZONE)
-    st.sidebar.markdown(f"Stand: {deployment_date.strftime('%d.%m.%y %H:%M')}")
+    return deployment_date.strftime("%d.%m.%y %H:%M")
 
 
 def current_date_time_for_filenames() -> str:
