@@ -1,9 +1,6 @@
 #!/bin/sh
 cd $(dirname $0)/..
 
-# update time stamp of main.py for version info
-touch src/main.py
-
 ruff format || exit 1
 ruff check || exit 1
 
@@ -24,5 +21,6 @@ rsync -ruzv --no-links --delete --delete-excluded --exclude __pycache__ src/ ent
 # echo installing packages
 ssh entorb@entorb.net "pip3.11 install --user -r streamlit-mindchat/requirements.txt > /dev/null"
 
+# touch main.py: update time stamp for version info
 echo restarting streamlit-mindchat
-ssh entorb@entorb.net "supervisorctl restart streamlit-mindchat"
+ssh entorb@entorb.net "touch streamlit-mindchat/src/main.py && supervisorctl restart streamlit-mindchat"
