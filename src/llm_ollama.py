@@ -6,7 +6,7 @@ import ollama
 
 from llm import LLMProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 MODELS = [
     "mistral",
@@ -26,7 +26,7 @@ class OllamaProvider(LLMProvider):
         try:
             self.client = ollama.Client()
         except Exception:
-            logger.exception("Failed to initialize Ollama client")
+            LOGGER.exception("Failed to initialize Ollama client")
             msg = "Cannot connect to Ollama. Please ensure Ollama is running."
             raise ConnectionError(msg) from None
 
@@ -62,11 +62,11 @@ class OllamaProvider(LLMProvider):
 
             content = response.get("message", {}).get("content", "")
             if not content:
-                logger.warning("Empty response from Ollama")
+                LOGGER.warning("Empty response from Ollama")
                 return ""
 
             return str(content)
 
         except Exception:
-            logger.exception("Ollama API error")
+            LOGGER.exception("Ollama API error")
             raise

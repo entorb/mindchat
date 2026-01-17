@@ -19,7 +19,6 @@ from texts import (
     r01_header_feedback,
     r01_self_info,
     r01_textarea_label,
-    r01_title,
 )
 
 
@@ -60,8 +59,6 @@ def text_editor() -> None:
 
 
 def main() -> None:  # noqa: D103
-    st.title(r01_title)
-
     st.markdown(r01_self_info)
 
     text_editor()
