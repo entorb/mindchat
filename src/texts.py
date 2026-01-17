@@ -24,8 +24,6 @@ login_error_wrong = "Falsch!"
 r00_title = "Info"
 
 r00_info = """
-# Info
-
 Falls auf dem Handy die Navigation links nicht angezeigt wird, oben links auf `>>` klicken.
 
 ## ⚠️ Wichtiger Haftungsausschluss

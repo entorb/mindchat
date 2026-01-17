@@ -8,7 +8,7 @@ from openai import OpenAI
 
 from llm import LLMProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 MODELS = [
     "gpt-5-nano",
@@ -32,13 +32,13 @@ class OpenAIProvider(LLMProvider):
             # Create a new client instance for each session (no shared state)
             self.client = OpenAI(api_key=st.secrets["openai_api_key"])
         except KeyError:
-            logger.exception("OpenAI API key not found in secrets")
+            LOGGER.exception("OpenAI API key not found in secrets")
             msg = (
                 "OpenAI API key not configured. Please add 'openai_api_key' to secrets."
             )
             raise ValueError(msg) from None
         except Exception:
-            logger.exception("Failed to initialize OpenAI client")
+            LOGGER.exception("Failed to initialize OpenAI client")
             raise
 
     def chat(
@@ -75,10 +75,10 @@ class OpenAIProvider(LLMProvider):
 
             content = response.choices[0].message.content
             if not content:
-                logger.warning("Empty response from OpenAI")
+                LOGGER.warning("Empty response from OpenAI")
             else:
                 return content
 
         except Exception:
-            logger.exception("OpenAI API error")
+            LOGGER.exception("OpenAI API error")
             raise

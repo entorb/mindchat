@@ -2,9 +2,7 @@
 
 import streamlit as st
 
-from texts import r99_logout, r99_title
-
-st.title(r99_title)
+from texts import r99_logout
 
 # Clear all session state
 keys_to_delete = list(st.session_state.keys())
