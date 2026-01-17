@@ -1,8 +1,13 @@
 #!/bin/sh
 cd $(dirname $0)/..
 
-ruff format || exit 1
-ruff check || exit 1
+# exit upon error
+set -e
+
+uv run ruff format
+uv run ruff check
+
+sh scripts/pytest.sh
 
 echo copying
 # requirements
