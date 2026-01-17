@@ -39,6 +39,7 @@ def main() -> None:  # noqa: D103
         return
 
     page = create_navigation()
+    st.title(page.title)
     page.run()
     llm_select_in_sidebar()
     st.sidebar.divider()

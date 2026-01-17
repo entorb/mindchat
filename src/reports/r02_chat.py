@@ -26,7 +26,6 @@ from texts import (
     r02_hist_btn_download,
     r02_missing_sd,
     r02_prompt_prefix,
-    r02_title,
 )
 
 
@@ -65,7 +64,6 @@ def show_history_buttons(system_message: str, history: ChatHistory) -> None:
 
 
 def main() -> None:  # noqa: D103
-    st.title(r02_title)
     st.markdown(r02_chat_info)
 
     if SS_KEY_SD not in st.session_state:

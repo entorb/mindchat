@@ -9,7 +9,7 @@ from google.genai import types as genai_types
 
 from llm import LLMProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 MODELS = [
     "gemini-2.5-flash-lite",
@@ -33,13 +33,13 @@ class GoogleProvider(LLMProvider):
             # Create a new client instance for each session (no shared state)
             self.client = genai.Client(api_key=st.secrets["google_api_key"])
         except KeyError:
-            logger.exception("Google API key not found in secrets")
+            LOGGER.exception("Google API key not found in secrets")
             msg = (
                 "Google API key not configured. Please add 'google_api_key' to secrets."
             )
             raise ValueError(msg) from None
         except Exception:
-            logger.exception("Failed to initialize Google client")
+            LOGGER.exception("Failed to initialize Google client")
             raise
 
     def chat(
@@ -92,13 +92,13 @@ class GoogleProvider(LLMProvider):
             response = chat.send_message(last_message)
 
             if not response or not response.text:
-                logger.warning("Empty response from Google Gemini")
+                LOGGER.warning("Empty response from Google Gemini")
                 return ""
 
             return str(response.text)
 
         except Exception:
-            logger.exception("Google Gemini API error")
+            LOGGER.exception("Google Gemini API error")
             raise
 
     def generate(self, model: str, system_message: str, prompt: str) -> str:
@@ -130,11 +130,11 @@ class GoogleProvider(LLMProvider):
             )
 
             if not response or not response.text:
-                logger.warning("Empty response from Google Gemini")
+                LOGGER.warning("Empty response from Google Gemini")
                 return ""
 
             return str(response.text)
 
         except Exception:
-            logger.exception("Google Gemini API error")
+            LOGGER.exception("Google Gemini API error")
             raise

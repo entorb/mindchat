@@ -8,7 +8,7 @@ from mistralai import Mistral
 
 from llm import LLMProvider
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 MODELS = ["mistral-medium-latest"]
 
@@ -28,14 +28,14 @@ class MistralProvider(LLMProvider):
             # Create a new client instance for each session (no shared state)
             self.client = Mistral(api_key=st.secrets["mistral_api_key"])
         except KeyError:
-            logger.exception("Mistral API key not found in secrets")
+            LOGGER.exception("Mistral API key not found in secrets")
             msg = (
                 "Mistral API key not configured. "
                 "Please add 'mistral_api_key' to secrets."
             )
             raise ValueError(msg) from None
         except Exception:
-            logger.exception("Failed to initialize Mistral client")
+            LOGGER.exception("Failed to initialize Mistral client")
             raise
 
     def chat(
@@ -73,11 +73,11 @@ class MistralProvider(LLMProvider):
 
             content = response.choices[0].message.content
             if not content:
-                logger.warning("Empty response from Mistral")
+                LOGGER.warning("Empty response from Mistral")
                 return ""
 
             return str(content)
 
         except Exception:
-            logger.exception("Mistral API error")
+            LOGGER.exception("Mistral API error")
             raise
