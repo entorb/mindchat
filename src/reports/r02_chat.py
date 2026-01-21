@@ -60,6 +60,7 @@ def show_history_buttons(system_message: str, history: ChatHistory) -> None:
 
     if cols[1].button(r02_hist_btn_del):
         del st.session_state[SS_KEY_CHAT_HISTORY]
+        st.rerun()
         # No st.rerun() needed - Streamlit auto-reruns on state change
 
 
