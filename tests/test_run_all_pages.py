@@ -6,6 +6,8 @@ from pathlib import Path
 import pytest
 from streamlit.testing.v1 import AppTest
 
+from config import PATH_PAGE_CHAT, PATH_PAGE_LOGOUT, PATH_PAGE_SELF
+
 
 # helpers
 def init_report(path: Path) -> AppTest:
@@ -28,10 +30,13 @@ def init_and_run(path: Path, timeout: int = 300) -> AppTest:
     return at
 
 
-pages = sorted(Path("src/reports").glob("*.py"))
+@pytest.mark.parametrize("p", [PATH_PAGE_SELF, PATH_PAGE_CHAT, PATH_PAGE_LOGOUT])
+def test_paths(p: Path) -> None:
+    """For links to other pages."""
+    assert (Path("src") / p).is_file(), f"src/{PATH_PAGE_SELF} missing"
 
 
-@pytest.mark.parametrize("p", pages)
+@pytest.mark.parametrize("p", sorted(Path("src/reports").glob("*.py")))
 def test_all_pages(p: Path) -> None:
     """Open all pages and check for errors and warnings."""
     _ = init_and_run(p)
