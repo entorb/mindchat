@@ -7,6 +7,7 @@ import random
 import streamlit as st
 
 from config import (
+    PATH_PAGE_LOGOUT,
     SS_KEY_CHAT_HISTORY,
     SS_KEY_LLM_MODEL,
     SS_KEY_SD,
@@ -16,6 +17,7 @@ from llm import get_cached_llm_provider
 from models import ChatHistory
 from texts import (
     SPINNER_MESSAGES,
+    r02_btn_logout,
     r02_chat_info,
     r02_chat_input,
     r02_export_heading0,
@@ -25,7 +27,7 @@ from texts import (
     r02_hist_btn_del,
     r02_hist_btn_download,
     r02_missing_sd,
-    r02_prompt_prefix,
+    r02_prompt_self_prefix,
 )
 
 
@@ -45,7 +47,7 @@ def generate_markdown_export(system_message: str, history: ChatHistory) -> str:
 @st.fragment
 def show_history_buttons(system_message: str, history: ChatHistory) -> None:
     """Show download and clear history buttons (wrapped in fragment)."""
-    cols = st.columns(2)
+    cols = st.columns(3)
 
     markdown_content = generate_markdown_export(system_message, history)
 
@@ -63,6 +65,10 @@ def show_history_buttons(system_message: str, history: ChatHistory) -> None:
         st.rerun()
         # No st.rerun() needed - Streamlit auto-reruns on state change
 
+    btn_logout = cols[2].button(r02_btn_logout, type="secondary")
+    if btn_logout:
+        st.switch_page(PATH_PAGE_LOGOUT)
+
 
 def main() -> None:  # noqa: D103
     st.markdown(r02_chat_info)
@@ -71,7 +77,7 @@ def main() -> None:  # noqa: D103
         st.write(r02_missing_sd)
         return
 
-    system_message = r02_prompt_prefix + st.session_state[SS_KEY_SD]
+    system_message = r02_prompt_self_prefix + st.session_state[SS_KEY_SD]
 
     # Initialize chat history with Pydantic model
     # This persists across provider/model changes

@@ -11,13 +11,13 @@ from streamlit.navigation.page import StreamlitPage
 
 from config import (
     LLM_PROVIDERS,
+    PATH_WEBSTATS_SCRIPT,
     SS_KEY_LLM_MODEL,
     SS_KEY_LLM_MODELS_LIST,
     SS_KEY_LLM_PROVIDER,
     SS_KEY_LLM_PROVIDER_INSTANCE,
     SS_KEY_LOGGED_IN,
     TIMEZONE,
-    WEBSTATS_SCRIPT,
 )
 from llm import get_cached_llm_provider
 from texts import (
@@ -99,7 +99,7 @@ def show_login_dialog() -> None:
             st.session_state[SS_KEY_LOGGED_IN] = True
 
             # increase the login counter via web-stats script
-            subprocess.run([WEBSTATS_SCRIPT, "mindchat"], check=False, shell=False)  # noqa: S603
+            subprocess.run([PATH_WEBSTATS_SCRIPT, "mindchat"], check=False, shell=False)  # noqa: S603
 
             st.rerun()
         else:

@@ -59,6 +59,8 @@ Technisch versierte Menschen können diese diese Anwendung gerne auf dem eigenen
 - Der Quellcode dieser App ist öffentlich auf [GitHub](https://github.com/entorb/mindchat) einsehbar - jeder kann ihn prüfen und verbessern.
 """
 
+r00_btn_self = "Zur Selbstauskunft"
+
 
 r01_title = "Selbstauskunft"
 
@@ -69,12 +71,15 @@ Fülle diese Selbstauskunft aus, damit Du mit der KI über Dich chatten kannst
 - 📋 **Struktur:** Zeilen mit '##' sind Überschriften - lösche gerne irrelevante Abschnitte oder füge eigene hinzu.
 - 🔐 **Privatsphäre:** Gib **keine** persönlichen Daten wie Namen, Adressen etc. ein.
 - 💡**Optional**
-  - **Lokal speichern:** Falls Du diese App später nochmal nutzen möchtest, speichere Deine Selbstauskunft auf Deinem Gerät, denn beim Abmelden werden alle Daten vom Server gelöscht.
+  - **Speichern** Falls Du diese App später nochmal nutzen möchtest, speichere Deine Selbstauskunft auf Deinem Gerät, denn beim Abmelden werden alle Daten vom Server gelöscht.
+  - Zum **Hochladen** von Deinem Gerät, scrolle nach unten.
   - **KI-Feedback:** Nutze den Button unten, um ein KI-Feedback zur Selbstauskunft zu erhalten.
 """
 
 r01_textarea_label = "Verfassen der Selbstauskunft"
-r01_btn_download = "Download"
+r01_btn_download = "Speichern auf Dein Gerät"
+r01_btn_upload = "Hochladen von Deinem Gerät"
+r01_btn_chat = "Starte KI Chat"
 
 # Feedback section
 r01_header_feedback = "Feedback"
@@ -106,7 +111,7 @@ Vorschläge für Fragen:
 
 r02_missing_sd = "Selbstauskunft ist leer"
 r02_chat_input = "Stelle eine Frage..."
-r02_prompt_prefix = "Du bist ein einfühlsamer und professioneller Psychotherapeut, der diese Person berät:\n"
+r02_prompt_self_prefix = "Du bist ein einfühlsamer und professioneller Psychotherapeut, der diese Person per Chat berät:\n"
 
 r02_hist_btn_download = "Download Chatverlauf"
 r02_hist_btn_del = "Chat-Verlauf löschen"
@@ -115,7 +120,7 @@ r02_export_title = "Chat-Verlauf"
 r02_export_heading0 = "KI Anweisung"
 r02_export_user_you = "Du"
 r02_export_user_ai = "KI"
-
+r02_btn_logout = "Beenden und alle Daten vom Server löschen"
 
 r99_title = "Logout"
 r99_logout = """
