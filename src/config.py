@@ -3,7 +3,7 @@
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-PATH_PROD_CHECK = Path("/var/www/virtual/entorb/html")
+PATH_PROD_CHECK = Path("/home/entorb/streamlit-mindchat")
 PATH_WEBSTATS_SCRIPT = "/var/www/virtual/entorb/web-stats.py"
 PATH_SD_TEMPLATE = Path("src/prompts/self-disclosure-template.md")
 PATH_PAGE_SELF = Path("reports/r01_self.py")
