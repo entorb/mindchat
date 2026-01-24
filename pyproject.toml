@@ -1,0 +1,31 @@
+[project]
+name = "mindchat"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "google-genai>=1.60.0",
+    "mistralai>=1.10.1",
+    "numpy==2.2.3",
+    "openai>=2.15.0",
+    "pandas==2.2.3",
+    "pyarrow==20.0.0",
+    "pydantic>=2.12.5",
+    "streamlit>=1.53.1",
+]
+
+[dependency-groups]
+dev = [
+    "ollama>=0.6.1",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.14",
+    "tomli-w>=1.2.0",
+    "watchdog>=6.0.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = "src"
