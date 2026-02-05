@@ -11,10 +11,8 @@ rm -f .DS_Store
 rm -f */.DS_Store
 
 # ruff
-uv run ruff check
-uv run ruff format
-
-sh scripts/pytest.sh
+sh scripts/run_ruff.sh
+sh scripts/run_pytest.sh
 
 echo copying
 # requirements
