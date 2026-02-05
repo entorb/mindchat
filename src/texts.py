@@ -85,7 +85,7 @@ r01_btn_chat = "Starte KI Chat"
 r01_header_feedback = "Feedback"
 r01_btn_feedback = "KI Feedback einholen"
 r01_feedback_prompt = """
-Die folgende Selbstauskunft soll später für ein Gespräch mit einem Psychotherapeuten verwendet werden.
+Die folgende Selbstauskunft soll später in einem Chat mit einem KI-Psychotherapeuten verwendet werden.
 
 Deine Aufgabe ist es, den Text zu überprüfen und Vorschläge zur Verbesserung zu machen.
 
@@ -95,6 +95,7 @@ Deine Aufgabe ist es, den Text zu überprüfen und Vorschläge zur Verbesserung 
 - prüfe auf Inkonsistenzen und Redundanzen
 - behalte die Kapitel-Struktur unverändert
 - schlage weitere Kapitel vor, falls relevante fehlen
+- frage nach weiteren Informationen, die für eine Psychoanalyse interessant wären
 - Ausgabe in Markdown Format
 """
 
@@ -111,7 +112,7 @@ Vorschläge für Fragen:
 
 r02_missing_sd = "Selbstauskunft ist leer"
 r02_chat_input = "Stelle eine Frage..."
-r02_prompt_self_prefix = "Du bist ein einfühlsamer und professioneller Psychotherapeut, der diese Person per Chat berät:\n"
+r02_prompt_self_prefix = "Du bist ein einfühlsamer und professioneller Psychotherapeut, der diese Person per Chat (keine zu langen Antworten) berät:\n"
 
 r02_hist_btn_download = "Download Chatverlauf"
 r02_hist_btn_del = "Chat-Verlauf löschen"
