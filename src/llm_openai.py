@@ -1,7 +1,7 @@
 """OpenAI LLM provider implementation."""
 
 import logging
-from typing import Any
+from typing import Any, Literal
 
 import streamlit as st
 from openai import OpenAI
@@ -42,7 +42,11 @@ class OpenAIProvider(LLMProvider):
             raise
 
     def chat(
-        self, model: str, system_message: str, messages: list[dict[str, str]]
+        self,
+        model: str,
+        system_message: str,
+        messages: list[dict[str, str]],
+        reasoning_effort: Literal["low", "medium", "high"] = "medium",
     ) -> str:
         """
         Send a chat request with conversation history to OpenAI.
@@ -51,6 +55,7 @@ class OpenAIProvider(LLMProvider):
             model: The model name to use
             system_message: System instruction for the model
             messages: List of message dicts with 'role' and 'content' keys
+            reasoning_effort: low, medium, high
 
         Returns:
             The model's response text
@@ -70,15 +75,17 @@ class OpenAIProvider(LLMProvider):
 
             response = self.client.chat.completions.create(
                 model=model,
-                messages=api_messages,
+                reasoning_effort=reasoning_effort,
+                messages=api_messages,  # type: ignore
             )
 
             content = response.choices[0].message.content
             if not content:
                 LOGGER.warning("Empty response from OpenAI")
-            else:
-                return content
+                return ""
 
         except Exception:
             LOGGER.exception("OpenAI API error")
             raise
+        else:
+            return content
