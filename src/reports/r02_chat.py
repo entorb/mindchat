@@ -107,6 +107,7 @@ def main() -> None:  # noqa: D103
         with st.chat_message("assistant"), st.spinner(random.choice(SPINNER_MESSAGES)):  # noqa: S311
             # Call LLM with proper message format
             llm = get_cached_llm_provider()
+            # TODO: use reasoning_effort parameter, after adding to all LLM providers
             response = llm.chat(
                 model=st.session_state[SS_KEY_LLM_MODEL],
                 system_message=system_message,
