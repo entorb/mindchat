@@ -3,6 +3,7 @@ deepseek
 entorb
 gemini
 genai
+htmlcov
 matomo
 Matomo
 mindchat
@@ -23,6 +24,7 @@ SonarQube
 streamlit
 Streamlit
 supervisorctl
+testpaths
 tomli
 Uberspace
 webstats
