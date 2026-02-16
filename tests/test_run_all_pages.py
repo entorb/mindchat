@@ -1,6 +1,5 @@
-"""Test: Open all Pages/Reports."""  # noqa: INP001
+"""Test: Open all Pages/Reports."""
 
-# ruff: noqa: D103
 from pathlib import Path
 
 import pytest
