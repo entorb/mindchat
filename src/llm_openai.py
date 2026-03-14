@@ -11,8 +11,8 @@ from llm import LLMProvider
 LOGGER = logging.getLogger(__name__)
 
 MODELS = [
-    "gpt-5-nano",
     "gpt-5-mini",
+    "gpt-5-nano",
     "gpt-5",
 ]
 
