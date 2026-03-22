@@ -4,7 +4,7 @@ import logging
 from typing import Any
 
 import streamlit as st
-from mistralai import Mistral
+from mistralai.client import Mistral
 
 from llm import LLMProvider
 
