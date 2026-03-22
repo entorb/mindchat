@@ -23,9 +23,9 @@ SS_KEY_SD = "my-self-disclosure"
 ENV = "Prod" if PATH_PROD_CHECK.exists() else "Local"
 
 if ENV == "Prod":
-    LLM_PROVIDERS = ["OpenAI"]
+    LLM_PROVIDERS = ["Mistral", "OpenAI"]
 else:
-    LLM_PROVIDERS = ["Ollama", "OpenAI", "Mistral", "Google"]
+    LLM_PROVIDERS = ["Ollama", "Mistral", "OpenAI", "Google"]
 
 
 # Page configuration

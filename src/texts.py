@@ -49,8 +49,8 @@ Technisch versierte Menschen können diese diese Anwendung gerne auf dem eigenen
 - Beim Logout und Sitzungsende werden alle Daten automatisch gelöscht
 - Der Entwickler dieser App hat **keinen Zugriff** auf Deine Eingaben oder Chat-Verläufe
 
-### Verarbeitung durch OpenAI
-- **Wichtig:** Deine Eingaben werden zur Verarbeitung an die (kostenpflichtige) KI von OpenAI (GPT-Modell) gesendet. [OpenAI](https://platform.openai.com/docs/guides/your-data) erklärt: "Your data is your data. As of March 1, 2023, data sent to the OpenAI API is not used to train or improve OpenAI models (unless you explicitly opt in to share data with us)."
+### Verarbeitung durch externe KI (Mistral, OpenAI)
+- **Wichtig:** Deine Eingaben werden zur Verarbeitung an die (kostenpflichtige) KI von Mistral oder wahlweise OpenAI (GPT-Modell) gesendet. [Mistral](https://legal.mistral.ai/terms/eu-consumers-terms-of-service) erklärt: "We do not use Your Data to train our artificial intelligence models except (a) when you (i) use Mistral AI Products under a free subscription, ... (ii) you have not opted-out of training". [OpenAI](https://platform.openai.com/docs/guides/your-data) erklärt: "Your data is your data. As of March 1, 2023, data sent to the OpenAI API is not used to train or improve OpenAI models (unless you explicitly opt in to share data with us)."
 - **Alternative 1:** Ein persönlichen ChatGPT, Mistral, DeepSeek, ... Account. Dieser hat aber gegenüber dieser App den Nachteil, dass OpenAI dort Deine Daten direkt Deiner Person zuordnen kann. Hier hingegen nur dieser App.
 - **Alternative 2:** Diese App lokal auf Deinem Rechner laufen lassen und eine lokale KI verwenden, siehe Hinweis oben.
 - Die Kommunikation erfolgt verschlüsselt über HTTPS
