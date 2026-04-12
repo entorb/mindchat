@@ -1,0 +1,9 @@
+__pycache__/
+.coverage
+.DS_Store
+.pytest_cache/
+.venv/
+coverage_report/
+
+.streamlit/secrets.toml
+requirements.txt
