@@ -6,19 +6,19 @@ readme = "README.md"
 requires-python = ">=3.11"
 
 dependencies = [
-    "google-genai>=1.73.1",
-    "mistralai>=2.4.2",
+    "google-genai>=2.2.0",
+    "mistralai>=2.4.5",
     "numpy==2.2.3",
-    "openai>=2.32.0",
+    "openai>=2.36.0",
     "pandas==2.2.3",
     "pyarrow==20.0.0",
-    "pydantic>=2.13.3",
-    "streamlit>=1.56.0",
+    "pydantic>=2.13.4",
+    "streamlit>=1.57.0",
 ]
 
 [dependency-groups]
 dev = [
-    "ollama>=0.6.1",
+    "ollama>=0.6.2",
     "pre-commit>=4.6.0",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
