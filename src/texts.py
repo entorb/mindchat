@@ -136,4 +136,5 @@ SPINNER_MESSAGES = [
     "Schmelze Gletscher…",
     "Falte Raum, Zeit und Tokens…",
     "Zeit zum Durchatmen…",
+    "Suche die Antwort auf die endgültige Frage nach dem Leben, dem Universum und dem ganzen Rest…",
 ]
