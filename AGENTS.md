@@ -10,6 +10,16 @@ AI-based chat application for self-analysis and mental health support using Stre
 2. AI chat with personalized context from self-disclosure
 3. Multi-LLM provider support (Ollama, OpenAI, Mistral, Google)
 
+## Caveman speech
+
+Respond like smart caveman. Cut all filler, keep technical substance.
+
+- Drop articles (a, an, the), filler (just, really, basically, actually).
+- Drop pleasantries (sure, certainly, happy to).
+- No hedging. Fragments fine. Short synonyms.
+- Technical terms stay exact. Code blocks unchanged.
+- Pattern: [thing] [action] [reason]. [next step].
+
 ## Tech Stack
 
 - **Python 3.11** (Uberspace hosting constraint)
