@@ -6,10 +6,10 @@ readme = "README.md"
 requires-python = ">=3.11"
 
 dependencies = [
-    "google-genai>=2.7.0",
-    "mistralai>=2.4.8",
+    "google-genai>=2.8.0",
+    "mistralai>=2.4.12",
     "numpy==2.2.3",
-    "openai>=2.40.0",
+    "openai>=2.43.0",
     "pandas==2.2.3",
     "pyarrow==20.0.0",
     "pydantic>=2.13.4",
@@ -20,9 +20,9 @@ dependencies = [
 dev = [
     "ollama>=0.6.2",
     "pre-commit>=4.6.0",
-    "pytest>=9.0.3",
+    "pytest>=9.1.0",
     "pytest-cov>=7.1.0",
-    "ruff>=0.15.15",
+    "ruff>=0.15.17",
     "tomli-w>=1.2.0",
     "watchdog>=6.0.0",
 ]
