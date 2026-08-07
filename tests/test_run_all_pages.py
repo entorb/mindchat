@@ -10,7 +10,7 @@ from config import PATH_PAGE_CHAT, PATH_PAGE_LOGOUT, PATH_PAGE_SELF
 
 # helpers
 def init_report(path: Path) -> AppTest:
-    at = AppTest.from_file(str(path))
+    at = AppTest.from_file(str(Path.cwd() / path))
     # setup some session variables
     at.session_state["logged_in"] = True
     return at
