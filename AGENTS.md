@@ -51,24 +51,24 @@ Avoid `# type: ignore` comments. Use proper type hints with `from typing import 
 
 ### Configuration Files
 
-- **`config.py`** - Contains all configuration variables. Use these instead of hardcoding values.
+- **[config.py](src/config.py)** - Contains all configuration variables. Use these instead of hardcoding values.
   - Session state keys (SS_KEY_*)
   - Environment detection (Prod vs Local)
   - LLM provider lists
   - File paths
 
-- **`texts.py`** - Contains all text constants for UI. Use these instead of hardcoding text.
+- **[texts.py](src/texts.py)** - Contains all text constants for UI. Use these instead of hardcoding text.
   - Purpose: Simplifies later translation to other languages
   - Currently German language only
 
 ### Key Directories
 
 - **`src/`** - Main application code
-  - `main.py` - Entry point with navigation and LLM selection
-  - `helper.py` - Utility functions (logging, navigation, login)
-  - `llm.py` - Abstract LLM provider interface
+  - [main.py](src/main.py) - Entry point with navigation and LLM selection
+  - [helper.py](src/helper.py) - Utility functions (logging, navigation, login)
+  - [llm.py](src/llm.py) - Abstract LLM provider interface
   - `llm_*.py` - Concrete LLM provider implementations
-  - `models.py` - Pydantic data models
+  - [models.py](src/models.py) - Pydantic data models
   - `reports/` - Page implementations (r00_info, r01_self, r02_chat, r99_logout)
   - `prompts/` - LLM prompt templates
 
