@@ -1,12 +1,13 @@
 ---
 $schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
-version: "0.2"
-language: de-DE,en-US
+version: '0.2'
+language: en-US
+useCache: true
 useGitignore: true
 
 dictionaryDefinitions:
   - name: cspell-words
-    path: "./cspell-words.txt"
+    path: cspell-words.txt
     addWords: true
 
 dictionaries:
@@ -15,8 +16,9 @@ dictionaries:
   # - typescript
 
 ignorePaths:
-  - ".*"
-  - "LICENSE"
-  - "cspell.config.yaml"
-  - "data/*.tsv"
-  - "uv.lock"
+  - '.*'
+  - 'cspell-words.txt'
+  - 'cspell.config.yaml'
+  - 'data/*.tsv'
+  - 'LICENSE'
+  - 'uv.lock'

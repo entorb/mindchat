@@ -1,4 +1,3 @@
-# CSpell Custom Dictionary Words
 aber
 abgemeldet
 Abmelden
