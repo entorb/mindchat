@@ -208,6 +208,7 @@ Raum
 Rechner
 Redundanzen
 relevante
+rumdl
 ruzv
 schlage
 Schritten
