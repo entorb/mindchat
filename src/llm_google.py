@@ -84,7 +84,7 @@ class GoogleProvider(LLMProvider):
                 config=genai_types.GenerateContentConfig(
                     system_instruction=system_message
                 ),
-                history=gemini_messages,
+                history=gemini_messages,  # pyright: ignore[reportArgumentType]
             )
 
             # Send the latest user message

@@ -67,11 +67,11 @@ class MistralProvider(LLMProvider):
 
             response = self.client.chat.complete(
                 model=model,
-                messages=api_messages,
+                messages=api_messages,  # pyright: ignore[reportArgumentType]
                 stream=False,
             )
 
-            content = response.choices[0].message.content
+            content = response.choices[0].message.content  # pyright: ignore[reportOptionalMemberAccess]
             if not content:
                 LOGGER.warning("Empty response from Mistral")
                 return ""

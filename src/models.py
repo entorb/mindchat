@@ -28,19 +28,6 @@ class ChatHistory(BaseModel):
         """Clear all messages."""
         self.messages.clear()
 
-    def to_api_format_with_system(self) -> list[dict[str, str]]:
-        """
-        Convert to API format including system message.
-
-        Returns:
-            List of message dicts with system message prepended
-
-        """
-        messages = [msg.to_dict() for msg in self.messages]
-        if self.system_message:
-            messages.insert(0, {"role": "system", "content": self.system_message})
-        return messages
-
     def to_api_format(self) -> list[dict[str, str]]:
         """
         Convert to API format (list of dicts) without system message.
@@ -50,12 +37,6 @@ class ChatHistory(BaseModel):
 
         """
         return [msg.to_dict() for msg in self.messages]
-
-    def get_user_assistant_messages(self) -> list[dict[str, str]]:
-        """Get only user and assistant messages (no system)."""
-        return [
-            msg.to_dict() for msg in self.messages if msg.role in ("user", "assistant")
-        ]
 
     def __len__(self) -> int:
         """Return number of messages."""
