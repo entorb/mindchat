@@ -1,0 +1,11 @@
+.coverage
+.DS_Store
+.streamlit/secrets.toml
+/.pytest_cache/
+/.ruff_cache/
+/.rumdl_cache/
+/.venv/
+__pycache__/
+coverage_report/
+cspell-words-missing.txt
+requirements.txt
