@@ -89,7 +89,7 @@ Avoid `# type: ignore` comments. Use proper type hints with `from typing import 
 ### Error Handling
 
 - Use `st.error()` for user-facing errors
-- Hide stack traces in production (`ENV == "Prod"`)
+- Hide stack traces in production (`ENV == "PROD"`)
 - Log detailed errors for debugging
 
 ## Privacy & Security
