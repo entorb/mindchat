@@ -34,7 +34,7 @@ LOGGER = logging.getLogger(__name__)
 
 def main() -> None:  # noqa: D103
     # Login, only on prod
-    if ENV == "Prod" and not st.session_state.get(SS_KEY_LOGGED_IN, False):
+    if ENV == "PROD" and not st.session_state.get(SS_KEY_LOGGED_IN, False):
         show_login_page()
         return
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     except Exception as e:
         LOGGER.exception("Exception:")
         # Use st.error for production to avoid exposing stack traces
-        if ENV == "Prod":
+        if ENV == "PROD":
             st.error(main_error_unexpected)
         else:
             st.exception(e)

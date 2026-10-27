@@ -1,9 +1,10 @@
 """Configuration."""
 
 from pathlib import Path
+from typing import Literal
 from zoneinfo import ZoneInfo
 
-PATH_PROD_CHECK = Path("/home/entorb/streamlit-mindchat")
+PATH_PROD_CHECK = Path("/var/www/virtual/entorb/")
 PATH_WEBSTATS_SCRIPT = "/var/www/virtual/entorb/web-stats.py"
 PATH_SD_TEMPLATE = Path("src/prompts/self-disclosure-template.md")
 PATH_PAGE_SELF = Path("reports/r01_self.py")
@@ -20,10 +21,10 @@ SS_KEY_LLM_PROVIDER_INSTANCE = "_llm_provider_instance"
 SS_KEY_LOGGED_IN = "logged_in"
 SS_KEY_SD = "my-self-disclosure"
 
-ENV = "Prod" if PATH_PROD_CHECK.exists() else "Local"
+ENV: Literal["PROD", "Local"] = "PROD" if PATH_PROD_CHECK.exists() else "Local"
 
-if ENV == "Prod":
-    LLM_PROVIDERS = ["Mistral", "OpenAI"]
+if ENV == "PROD":
+    LLM_PROVIDERS = ["Mistral"]
 else:
     LLM_PROVIDERS = ["Ollama", "Mistral", "OpenAI", "Google"]
 
