@@ -32,7 +32,7 @@ Create a `.streamlit/secrets.toml` file based on [.streamlit/secrets-EXAMPLE.tom
 ### Run the application
 
 ```bash
-uv run streamlit run src/main.py
+APP_ENV=Local uv run streamlit run src/main.py
 ```
 
 The app will open in your browser at `http://localhost:8504`.
