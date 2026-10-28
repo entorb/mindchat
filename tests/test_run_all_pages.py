@@ -1,9 +1,12 @@
 """Test: Open all Pages/Reports."""
 
+import os
 from pathlib import Path
 
 import pytest
 from streamlit.testing.v1 import AppTest
+
+os.environ.setdefault("APP_ENV", "Local")
 
 from config import PATH_PAGE_CHAT, PATH_PAGE_LOGOUT, PATH_PAGE_SELF
 
