@@ -1,10 +1,10 @@
 """Configuration."""
 
+import os
 from pathlib import Path
 from typing import Literal
 from zoneinfo import ZoneInfo
 
-PATH_PROD_CHECK = Path("/var/www/virtual/entorb/")
 PATH_WEBSTATS_SCRIPT = "/var/www/virtual/entorb/web-stats.py"
 PATH_SD_TEMPLATE = Path("src/prompts/self-disclosure-template.md")
 PATH_PAGE_SELF = Path("reports/r01_self.py")
@@ -21,7 +21,12 @@ SS_KEY_LLM_PROVIDER_INSTANCE = "_llm_provider_instance"
 SS_KEY_LOGGED_IN = "logged_in"
 SS_KEY_SD = "my-self-disclosure"
 
-ENV: Literal["PROD", "Local"] = "PROD" if PATH_PROD_CHECK.exists() else "Local"
+# unset defaults to PROD: fail safe, login required
+_APP_ENV = os.environ.get("APP_ENV", "PROD")
+if _APP_ENV not in ("PROD", "Local"):
+    msg = f"Invalid APP_ENV: {_APP_ENV!r}, expected 'PROD' or 'Local'"
+    raise ValueError(msg)
+ENV: Literal["PROD", "Local"] = "PROD" if _APP_ENV == "PROD" else "Local"
 
 if ENV == "PROD":
     LLM_PROVIDERS = ["Mistral"]
