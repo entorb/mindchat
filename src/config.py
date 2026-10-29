@@ -1,11 +1,12 @@
 """Configuration."""
 
 import os
+from getpass import getuser
 from pathlib import Path
 from typing import Literal
 from zoneinfo import ZoneInfo
 
-PATH_WEBSTATS_SCRIPT = "/var/www/virtual/entorb/web-stats.py"
+PATH_WEBSTATS_SCRIPT = Path("/var/www/virtual") / getuser() / "web-stats.py"
 PATH_SD_TEMPLATE = Path("src/prompts/self-disclosure-template.md")
 PATH_PAGE_SELF = Path("reports/r01_self.py")
 PATH_PAGE_CHAT = Path("reports/r02_chat.py")
