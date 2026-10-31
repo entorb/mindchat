@@ -2,14 +2,14 @@
 set -e
 cd "$(dirname "$0")/.."
 
-uv remove numpy pandas pyarrow streamlit google-genai mistralai openai pydantic
+uv remove streamlit google-genai mistralai openai pydantic
 uv remove --dev ruff pytest pytest-cov tomli-w watchdog ollama
 
 uv lock --upgrade
 uv sync --upgrade
 
 # pin to old versions due to Uberspace restrictions
-uv add numpy==2.2.3 pandas==2.2.3 pyarrow==20.0.0 streamlit google-genai mistralai openai pydantic
+uv add streamlit google-genai mistralai openai pydantic
 uv add --dev ruff pytest pytest-cov tomli-w watchdog ollama
 
 uv lock --upgrade
@@ -23,6 +23,6 @@ uv run ruff check --fix
 
 # pre-commit
 prek autoupdate --cooldown-days 7
-prek run --all-files
+prek run --all-files --quiet
 
 echo DONE
