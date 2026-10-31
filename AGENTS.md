@@ -22,7 +22,7 @@ Respond like smart caveman. Cut all filler, keep technical substance.
 
 ## Tech Stack
 
-- **Python 3.11** (Uberspace hosting constraint)
+- **Python 3.14** (Uberspace hosting constraint)
 - **Streamlit** - Web framework
 - **UV** - Package management
 - **Ruff** - Linting and formatting
