@@ -5,13 +5,9 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: monthly
+      interval: quarterly
     cooldown:
-      default-days: 14
-    commit-message:
-      prefix: ⬆
-    labels:
-      - dependencies
+      default-days: 7
     groups:
       github-actions:
         patterns:
