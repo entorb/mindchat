@@ -11,16 +11,6 @@ with p_in.open("rb") as fh:
 
 lst = sorted(o["project"]["dependencies"], key=str.casefold)
 
-# Filter only "streamlit" or "openai"
-lst = [
-    dep
-    for dep in lst
-    if any(
-        x in dep
-        for x in ["streamlit", "openai", "google-genai", "pydantic", "mistralai"]
-    )
-]
-
 p_out.write_text(
     "# created by gen_requirements.py from pyproject.toml\n" + "\n".join(lst) + "\n"
 )
