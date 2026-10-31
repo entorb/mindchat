@@ -5,9 +5,9 @@ import logging
 import subprocess
 import time
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import streamlit as st
-from streamlit.navigation.page import StreamlitPage
 
 from config import (
     LLM_PROVIDERS,
@@ -37,6 +37,9 @@ from texts import (
     r02_title,
     r99_title,
 )
+
+if TYPE_CHECKING:
+    from streamlit.navigation.page import StreamlitPage
 
 
 def init_logging() -> None:
