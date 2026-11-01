@@ -37,12 +37,9 @@ exclude_lines = ["pragma: no cover", "if __name__ == \"__main__\":"]
 [tool.uv]
 required-version = "~=0.13.6"
 exclude-newer = "7 days"
-
-# pyarrow cannot be updated beyond 20.0.0 (pinned by pandas==2.2.3 compatibility)
-[tool.uv.audit]
-# cspell:disable
-ignore = ["GHSA-rgxp-2hwp-jwgg"]
-# cspell:enable
+# security fix GHSA-9m75-vc3g-4x39 et al. (pyasn1 0.6.5)
+# TODO: remove after 07.11.26
+exclude-newer-package = { pyasn1 = false }
 
 [tool.pyright]
 include = ["src"]
