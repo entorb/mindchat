@@ -1,7 +1,6 @@
 """Selbstauskunft."""
 
 import random
-from io import StringIO
 
 import streamlit as st
 
@@ -19,9 +18,11 @@ from texts import (
     r01_btn_download,
     r01_btn_feedback,
     r01_btn_upload,
+    r01_error_upload,
     r01_feedback_prompt,
     r01_header_feedback,
     r01_self_info,
+    r01_success_upload,
     r01_textarea_label,
 )
 
@@ -74,16 +75,17 @@ def file_upload() -> None:
         accept_multiple_files=False,
     )
     if uploaded_file and not st.session_state.get("file_processed", False):
-        bytes_data = uploaded_file.getvalue()
-        string_io = StringIO(bytes_data.decode("utf-8"))
-        string_data = string_io.read()
-        st.session_state[SS_KEY_SD] = string_data
+        try:
+            st.session_state[SS_KEY_SD] = uploaded_file.getvalue().decode("utf-8")
+        except UnicodeDecodeError:
+            st.error(r01_error_upload)
+            return
         # Clear the text_area_temp key to force recreation with new value
         if KEY_TEXTAREA in st.session_state:
             del st.session_state[KEY_TEXTAREA]
         # Mark file as processed to prevent loop
         st.session_state["file_processed"] = True
-        st.success("Hochgeladen")
+        st.success(r01_success_upload)
         st.rerun()
     elif not uploaded_file:
         # Reset the processed flag when uploader is cleared

@@ -35,7 +35,7 @@ def init_and_run(path: Path, timeout: int = 300) -> AppTest:
 @pytest.mark.parametrize("p", [PATH_PAGE_SELF, PATH_PAGE_CHAT, PATH_PAGE_LOGOUT])
 def test_paths(p: Path) -> None:
     """For links to other pages."""
-    assert (Path("src") / p).is_file(), f"src/{PATH_PAGE_SELF} missing"
+    assert (Path("src") / p).is_file(), f"src/{p} missing"
 
 
 @pytest.mark.parametrize("p", sorted(Path("src/reports").glob("*.py")))
