@@ -76,7 +76,7 @@ class OpenAIProvider(LLMProvider):
             response = self.client.chat.completions.create(
                 model=model,
                 reasoning_effort=reasoning_effort,
-                messages=api_messages,  # type: ignore
+                messages=api_messages,  # pyright: ignore[reportArgumentType]
             )
 
             content = response.choices[0].message.content

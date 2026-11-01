@@ -79,6 +79,8 @@ Fülle diese Selbstauskunft aus, damit Du mit der KI über Dich chatten kannst
 r01_textarea_label = "Verfassen der Selbstauskunft"
 r01_btn_download = "Speichern auf Dein Gerät"
 r01_btn_upload = "Hochladen von Deinem Gerät"
+r01_success_upload = "Hochgeladen"
+r01_error_upload = "Datei ist keine UTF-8 Textdatei"
 r01_btn_chat = "Starte KI Chat"
 
 # Feedback section

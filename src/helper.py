@@ -1,6 +1,7 @@
 """Helper Functions."""
 
 import datetime as dt
+import hmac
 import logging
 import subprocess
 import time
@@ -98,7 +99,10 @@ def show_login_dialog() -> None:
     password = st.text_input(login_input_label, type="password")
 
     if st.button(login_btn_label, type="primary") or password:
-        if password == st.secrets["login_password"]:
+        # bytes: compare_digest rejects non-ASCII str
+        if hmac.compare_digest(
+            password.encode(), str(st.secrets["login_password"]).encode()
+        ):
             st.session_state[SS_KEY_LOGGED_IN] = True
 
             # increase the login counter via web-stats script
