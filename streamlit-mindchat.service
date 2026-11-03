@@ -1,0 +1,16 @@
+# started on demand by streamlit-mindchat-proxy.service, stops together with it
+# no [Install]: do not enable, streamlit-mindchat.socket is the entry point
+[Unit]
+StopWhenUnneeded=yes
+
+[Service]
+Environment="APP_ENV=PROD"
+# limit glibc malloc arenas: less fragmentation from per-session threads
+Environment="MALLOC_ARENA_MAX=2"
+WorkingDirectory=/home/entorb8/be/mindchat
+ExecStart=python3.14 -O -m streamlit run src/main.py --server.port 8505 --server.address 127.0.0.1
+# proxy waits for this: first request must not hit a closed port
+ExecStartPost=/bin/sh -c 'until curl -sf http://127.0.0.1:8505/mindchat/_stcore/health >/dev/null; do sleep 0.5; done'
+TimeoutStartSec=60
+Restart=on-failure
+RestartSec=5

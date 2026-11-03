@@ -10,8 +10,7 @@ rm -f -- ./*/.DS_Store
 sh scripts/run_spelling.sh
 
 # ruff
-sh scripts/run_ruff.sh
-sh scripts/run_pytest.sh
+sh scripts/run_checks.sh
 
 echo copying
 # requirements
@@ -31,7 +30,7 @@ rsync -ruzv --no-links --delete --delete-excluded --exclude __pycache__ src/ ent
 ssh entorb8@mab.uberspace.de "python3.14 -m pip install --user -r be/mindchat/requirements.txt > /dev/null"
 
 # touch main.py: update time stamp for version info
-echo restarting mindchat
-ssh entorb8@mab.uberspace.de "touch be/mindchat/src/main.py && systemctl --user restart streamlit-mindchat"
+echo stopping mindchat, next request starts new version
+ssh entorb8@mab.uberspace.de "touch be/mindchat/src/main.py && systemctl --user stop streamlit-mindchat-proxy streamlit-mindchat"
 
 echo DONE

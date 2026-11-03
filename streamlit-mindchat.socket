@@ -1,0 +1,7 @@
+# public port 8504, starts proxy (and so streamlit) on first connection
+[Socket]
+ListenStream=8504
+Service=streamlit-mindchat-proxy.service
+
+[Install]
+WantedBy=sockets.target
