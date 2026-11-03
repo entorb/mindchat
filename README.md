@@ -67,6 +67,6 @@ Currently only German language is implemented, but all texts are in one [central
 ## Tech stack
 
 - [UV](https://docs.astral.sh/uv/)
-- Python 3.11 (as Uberspace currently only supports up to 3.11)
+- Python 3.14
 - [Streamlit](https://streamlit.io)
 - [SonarQube](https://sonarcloud.io/project/overview?id=entorb_mindchat) for static code analysis
